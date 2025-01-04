@@ -3,12 +3,17 @@ package cz.cvut.omo.smarthome.house.device;
 import java.util.List;
 
 public class Fridge extends Device {
-    private double Temperature;
-    private List<Food> food;
+    private List<Food> groceries;
+
 
     //------Methods------
 
-    public void setTemperature(Double temperature) {
-        //TO DO
-    }
+
+    public void haveIngredients() {}
+
+    public void haveHealthyFood() {}
+
+    public void addFood() {}
+
+    public void removeFood() {}
 }

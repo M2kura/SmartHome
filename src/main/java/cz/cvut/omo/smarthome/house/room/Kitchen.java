@@ -1,18 +1,16 @@
 package cz.cvut.omo.smarthome.house.room;
 
 
-import cz.cvut.omo.smarthome.house.person.Person;
+import cz.cvut.omo.smarthome.house.creature.Person;
 
 import java.util.List;
 
 public class Kitchen extends Room{
-    private List<Person> peopleEating;
+    private int maxPeopleEating;
+    private int peopleEating;
 
 
-    //------Methods------
+    public void removePerson() {}
 
-
-    public List<Person> getPeopleEating() {
-        return peopleEating;
-    }
+    public void placePerson() {}
 }

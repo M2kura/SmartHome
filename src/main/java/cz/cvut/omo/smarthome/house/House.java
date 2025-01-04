@@ -1,16 +1,14 @@
 package cz.cvut.omo.smarthome.house;
 
-import cz.cvut.omo.smarthome.house.animals.Animal;
-import cz.cvut.omo.smarthome.house.person.Person;
+import cz.cvut.omo.smarthome.house.creature.Person;
 import cz.cvut.omo.smarthome.house.utils.Event;
 
 import java.util.List;
 
-public class House {
+public class House extends UpdatableContainer {
     private List<Floor> floors;
     private List<Person> residents;
     private List<Event> events;
-    private List<Animal> animals;
 
     //------Methods------
 
