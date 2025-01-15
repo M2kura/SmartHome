@@ -1,7 +1,7 @@
 package cz.cvut.omo.smarthome.house.room;
 
 
-import cz.cvut.omo.smarthome.house.person.Person;
+import cz.cvut.omo.smarthome.house.resident.person.Person;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package cz.cvut.omo.smarthome.house.person;
+package cz.cvut.omo.smarthome.house.resident.person;
 
 import cz.cvut.omo.smarthome.house.device.Food;
 import cz.cvut.omo.smarthome.house.device.GasBoiler;

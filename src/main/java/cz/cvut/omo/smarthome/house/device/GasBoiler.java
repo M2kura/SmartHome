@@ -1,5 +1,7 @@
 package cz.cvut.omo.smarthome.house.device;
 
+import cz.cvut.omo.smarthome.house.device.Device;
+
 public class GasBoiler extends Device {
     private double temperature;
 

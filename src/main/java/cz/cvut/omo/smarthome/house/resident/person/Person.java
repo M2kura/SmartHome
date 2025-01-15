@@ -1,6 +1,5 @@
-package cz.cvut.omo.smarthome.house.person;
+package cz.cvut.omo.smarthome.house.resident.person;
 
-import cz.cvut.omo.smarthome.house.House;
 import cz.cvut.omo.smarthome.house.device.Food;
 import cz.cvut.omo.smarthome.house.room.Room;
 
@@ -13,7 +12,6 @@ public class Person {
     private boolean isAtHome;
     private double age;
     private Room currentRoom;
-    private House house;
     private boolean isSleeping;
 
     public Person() {

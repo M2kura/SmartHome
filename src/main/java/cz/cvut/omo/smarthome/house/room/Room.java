@@ -1,8 +1,8 @@
 package cz.cvut.omo.smarthome.house.room;
 
-import cz.cvut.omo.smarthome.house.animals.Animal;
+import cz.cvut.omo.smarthome.house.resident.animal.Animal;
 import cz.cvut.omo.smarthome.house.device.Device;
-import cz.cvut.omo.smarthome.house.person.Person;
+import cz.cvut.omo.smarthome.house.resident.person.Person;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,6 +1,6 @@
 package cz.cvut.omo.smarthome.house.room;
 
-import cz.cvut.omo.smarthome.house.person.Person;
+import cz.cvut.omo.smarthome.house.resident.person.Person;
 
 public class Bedroom extends Room {
     private Person owner;
