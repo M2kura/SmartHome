@@ -1,7 +1,7 @@
-package cz.cvut.omo.smarthome.house.creature;
+package cz.cvut.omo.smarthome.house.resident.person;
 
 import cz.cvut.omo.smarthome.house.device.Device;
-import cz.cvut.omo.smarthome.house.device.HeatingSystem;
+import cz.cvut.omo.smarthome.house.resident.person.Adult;
 
 public class Dad extends Adult {
 

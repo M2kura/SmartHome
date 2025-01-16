@@ -1,16 +1,14 @@
 package cz.cvut.omo.smarthome.house.device;
 
-import java.time.LocalDate;
-import java.util.Date;
-
 public class Food {
     private String name;
     private boolean healthyFood;
-    private LocalDate expireDate;
+    private int expireIn;
 
-    public Food() {
+    public Food(String name, int expireDate) {
         this.name = name;
-        this.expireDate = expireDate;
+        this.healthyFood = true;
+        this.expireIn = expireDate;
     }
 
     public String getName() {

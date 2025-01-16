@@ -1,6 +1,7 @@
-package cz.cvut.omo.smarthome.house.creature;
+package cz.cvut.omo.smarthome.house.resident.person;
 
 import cz.cvut.omo.smarthome.house.device.manuals.Recipe;
+import cz.cvut.omo.smarthome.house.resident.person.Adult;
 import java.util.List;
 
 public class Mom extends Adult {

@@ -1,4 +1,4 @@
-package cz.cvut.omo.smarthome.house.resident.animal;
+package cz.cvut.omo.smarthome.house.resident;
 
 import cz.cvut.omo.smarthome.house.room.Room;
 

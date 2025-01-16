@@ -10,15 +10,13 @@ public class GasBoiler extends Device {
 
 
     public boolean isStateOn() {
-        return state;
+        return true;
     }
 
     public void turnOn(){
-        state = true;
     }
 
     public void turnOff() {
-        state = false;
     }
     private void setTemperature(Double temperature) {
         this.temperature = temperature;

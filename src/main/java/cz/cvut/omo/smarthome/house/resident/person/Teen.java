@@ -1,4 +1,4 @@
-package cz.cvut.omo.smarthome.house.creature;
+package cz.cvut.omo.smarthome.house.resident.person;
 
 public class Teen extends Adult {
 

@@ -2,11 +2,12 @@ package cz.cvut.omo.smarthome.house.resident.person;
 
 import cz.cvut.omo.smarthome.house.device.Food;
 import cz.cvut.omo.smarthome.house.room.Room;
+import cz.cvut.omo.smarthome.house.resident.Resident;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class Person {
+public abstract class Person extends Resident {
     private String name;
     private String surname;
     private boolean isAtHome;
@@ -20,19 +21,16 @@ public class Person {
         this.isSleeping = false;
     }
 
-    //------Methods------
-
     public String getName() {
         return name;
     }
 
-
     public void moveToRoom(Room newRoom) {
         if (currentRoom != null) {
-            currentRoom.removePersonFromRoom(this);
+            currentRoom.removeResident(this);
         }
 
-        newRoom.addPersonToRoom(this);
+        newRoom.addResident(this);
         currentRoom = newRoom;
     }
 
