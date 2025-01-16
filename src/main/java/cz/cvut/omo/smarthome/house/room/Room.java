@@ -3,7 +3,9 @@ package cz.cvut.omo.smarthome.house.room;
 import cz.cvut.omo.smarthome.house.Floor;
 import cz.cvut.omo.smarthome.house.resident.Resident;
 import cz.cvut.omo.smarthome.house.device.Device;
+import cz.cvut.omo.smarthome.house.device.RobotVacuum;
 
+import java.awt.*;
 import java.util.List;
 
 public abstract class Room {
@@ -26,6 +28,10 @@ public abstract class Room {
 
     public void isEmpty() {}
 
-    public void isDirty() {}
+    public void isDirty() {
+        if( dirtLevel > 60 ) {
+            RobotVacuum.use();
+        }
+    }
 
 }

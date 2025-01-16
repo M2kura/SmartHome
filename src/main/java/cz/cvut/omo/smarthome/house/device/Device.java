@@ -18,7 +18,7 @@ public abstract class Device {
         return consumption;
     }
 
-    public void use() {}
+    public static void use() {}
 
     public Optional<String> getManual() {
         return deviceManual;
