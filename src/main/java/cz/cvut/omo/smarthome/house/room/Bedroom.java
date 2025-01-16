@@ -2,14 +2,12 @@ package cz.cvut.omo.smarthome.house.room;
 
 import cz.cvut.omo.smarthome.house.resident.person.Person;
 
+import java.util.List;
+
 public class Bedroom extends Room {
-    private Person owner;
+    private List<Person> owners;
 
-
-    //------Methods------
-
-
-    public Person getOwner() {
-        return owner;
+    public List<Person> getOwner() {
+        return owners;
     }
 }

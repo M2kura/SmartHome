@@ -3,13 +3,13 @@ package cz.cvut.omo.smarthome.house.room;
 import cz.cvut.omo.smarthome.house.room.Room;
 
 public class Outside extends Room {
-    private String weather;
-
-
-    //------Methods------
+    private String weatherType;
+    private int temperature;
 
 
     public String getWeather() {
-        return weather;
+        return weatherType;
     }
+
+    public void updateWeather() {}
 }

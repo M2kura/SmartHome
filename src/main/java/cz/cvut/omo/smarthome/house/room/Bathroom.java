@@ -1,11 +1,7 @@
 package cz.cvut.omo.smarthome.house.room;
 
-public class Bathroom {
+public class Bathroom extends Room {
     private boolean isTaken;
-
-
-    //------Methods------
-
 
     public boolean isTaken(){
         return isTaken;

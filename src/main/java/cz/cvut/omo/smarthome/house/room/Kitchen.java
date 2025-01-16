@@ -6,13 +6,10 @@ import cz.cvut.omo.smarthome.house.resident.person.Person;
 import java.util.List;
 
 public class Kitchen extends Room{
-    private List<Person> peopleEating;
+    private int maxPeopleEating;
+    private int peopleEating;
 
+    public void removePerson() {}
 
-    //------Methods------
-
-
-    public List<Person> getPeopleEating() {
-        return peopleEating;
-    }
+    public void placePerson() {}
 }

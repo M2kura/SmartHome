@@ -1,17 +1,30 @@
 package cz.cvut.omo.smarthome.house.device;
 
-import java.util.Map;
+import cz.cvut.omo.smarthome.house.resident.person.Person;
 import cz.cvut.omo.smarthome.house.room.Room;
 
+import java.util.Map;
+import java.util.Optional;
+
 public abstract class Device {
-    protected boolean state;
-    protected Map<String, Double> consumption;
-    protected String deviceManual;
+    protected boolean isBroken;
+    protected Consumption consumption;
+    protected Optional<String> deviceManual;
     protected Room currentRoom;
+    protected double breakChance;
+    protected Optional<Person> usedBy;
 
-    //------Methods------
+    public Consumption getConsumption() {
+        return consumption;
+    }
 
-    public void getData() {
-        //TO DO
+    public void use() {}
+
+    public Optional<String> getManual() {
+        return deviceManual;
+    }
+
+    public void setManual() {
+        this.deviceManual = deviceManual;
     }
 }
