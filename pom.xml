@@ -12,9 +12,38 @@
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <jackson.version>2.16.1</jackson.version>
     </properties>
 
+    <dependencies>
+        <!-- Jackson core library -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+
+        <!-- Jackson databind (for object mapping) -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+
+        <!-- Jackson annotations (optional, but recommended) -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+    </dependencies>
+
     <build>
+        <resources>
+            <resource>
+                <directory>${project.basedir}/resources</directory>
+            </resource>
+        </resources>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -36,6 +65,14 @@
                             <mainClass>cz.cvut.omo.smarthome.Main</mainClass>
                         </manifest>
                     </archive>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.1.0</version>
+                <configuration>
+                    <mainClass>cz.cvut.omo.smarthome.Main</mainClass>
                 </configuration>
             </plugin>
         </plugins>

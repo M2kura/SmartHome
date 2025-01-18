@@ -3,12 +3,43 @@ package cz.cvut.omo.smarthome;
 import java.io.IOException;
 import java.util.concurrent.atomic.AtomicBoolean;
 import cz.cvut.omo.smarthome.house.SmartHome;
+import java.util.List;
+import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        AtomicBoolean finish = new AtomicBoolean(false);
-        SmartHome house = new SmartHome("");
+        Scanner scanner = new Scanner(System.in);
+        List<String> configs;
+        String fileName = "";
+        try {
+            configs = Utils.listConfigs();
+            if (!configs.isEmpty()) {
+                System.out.println("Following configs found:");
+                for (String config : configs) {
+                    System.out.println(config);
+                }
+                System.out.println("Please, choose the config file to start simulation with by typing it's name and pressing enter.");
+                System.out.println("To quit the programm, type \"exit\" and press enter");
+                fileName = scanner.nextLine();
+                while (!fileName.equals("exit") && !configs.contains(fileName)) {
+                    System.out.println("Incorrect file name given, try again");
+                    fileName = scanner.nextLine();
+                }
+                if (fileName.equals("exit")) {
+                    return;
+                } else {
+                    System.out.println("Starting the simulation...");
+                }
+            } else {
+                System.out.println("No config files found, exiting");
+                return;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
+        AtomicBoolean finish = new AtomicBoolean(false);
+        SmartHome house = new SmartHome(fileName);
         Thread inputThread = new Thread(() -> {
             try {
                 while (true) {
