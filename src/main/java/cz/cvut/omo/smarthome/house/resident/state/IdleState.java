@@ -1,4 +1,6 @@
-package cz.cvut.omo.smarthome.house.creature.state;
+package cz.cvut.omo.smarthome.house.resident.state;
 
-public class IdleState {
+import cz.cvut.omo.smarthome.house.resident.state.State;
+
+public class IdleState implements State{
 }

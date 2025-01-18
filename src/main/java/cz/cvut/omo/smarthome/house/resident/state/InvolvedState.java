@@ -1,4 +1,6 @@
-package cz.cvut.omo.smarthome.house.creature.state;
+package cz.cvut.omo.smarthome.house.resident.state;
 
-public class InvolvedState {
+import cz.cvut.omo.smarthome.house.resident.state.State;
+
+public class InvolvedState implements State{
 }
