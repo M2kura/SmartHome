@@ -3,6 +3,8 @@ package cz.cvut.omo.smarthome;
 import java.io.IOException;
 import java.util.concurrent.atomic.AtomicBoolean;
 import cz.cvut.omo.smarthome.house.SmartHome;
+import cz.cvut.omo.smarthome.utils.Utils;
+
 import java.util.List;
 import java.util.Scanner;
 
