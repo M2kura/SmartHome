@@ -3,7 +3,7 @@ package cz.cvut.omo.smarthome.house.utils;
 import cz.cvut.omo.smarthome.house.resident.Resident;
 import cz.cvut.omo.smarthome.house.device.Device;
 import cz.cvut.omo.smarthome.house.device.Food;
-import cz.cvut.omo.smarthome.house.room.Room;
+import cz.cvut.omo.smarthome.house.Room;
 
 import java.util.List;
 import java.util.Optional;

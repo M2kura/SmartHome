@@ -1,18 +1,33 @@
 package cz.cvut.omo.smarthome.house.resident;
 
 import cz.cvut.omo.smarthome.house.resident.state.State;
+import cz.cvut.omo.smarthome.house.resident.state.IdleState;
+import cz.cvut.omo.smarthome.utils.Clock;
+import cz.cvut.omo.smarthome.utils.Report;
+import cz.cvut.omo.smarthome.house.Room;
 
-import cz.cvut.omo.smarthome.house.room.Room;
+public abstract class Resident {
+    protected State state;
+    protected String name;
+    protected Room currentRoom;
+    protected int energyLevel;
+    protected int hungerLevel;
+    protected int entertainmentLevel;
+    protected Room personalRoom;
+    protected Clock clock;
+    protected Report report;
 
-public class Resident {
-    private State state;
-    private String name;
-    private Room currentRoom;
-    private int energyLevel;
-    private int hungerLevel;
-    private int entertainmentLevel;
-    private Room personalRoom;
-
+    public Resident(Room room, String name) {
+        this.state = new IdleState();
+        this.currentRoom = room;
+        this.personalRoom = room;
+        this.name = name;
+        this.energyLevel = 100;
+        this.hungerLevel = 100;
+        this.entertainmentLevel = 100;
+        this.clock = Clock.getClock();
+        this.report = Report.getReport();
+    }
 
     public void changeRoom(Room newRoom) {
         if (!newRoom.equals(currentRoom)) {
