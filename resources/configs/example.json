@@ -1,56 +1,56 @@
 {
-	"floors": [
+"floors": [
+	{
+	"number": 1,
+	"rooms": [
 		{
-			"number": 1,
-			"rooms": [
-				{
-					"name": "Outside",
-					"devices": [],
-					"residents": []
-				},
-				{
-					"name": "Kitchen",
-					"devices": [],
-					"residents": []
-				},
-				{
-					"name": "Living Room",
-					"devices": [],
-					"residents": []
-				},
-				{
-					"name": "Garage",
-					"devices": [],
-					"residents": []
-				}
-			]
+		"name": "Outside",
+		"devices": [],
+		"residents": []
 		},
 		{
-			"number": 2,
-			"rooms": [
-				{
-					"name": "Bathroom",
-					"devices": [],
-					"residents": []
-				},
-				{
-					"name": "Bedroom",
-					"devices": [],
-					"residents": []
-				},
-				{
-					"name": "Bedroom",
-					"devices": [],
-					"residents": []
-				},
-				{
-					"name": "Bedroom",
-					"devices": [],
-					"residents": [
-						{ "type": "Dad", "name": "George" }
-					]
-				}
-			]
+		"name": "Kitchen",
+		"devices": [],
+		"residents": []
+		},
+		{
+		"name": "Living Room",
+		"devices": [],
+		"residents": []
+		},
+		{
+		"name": "Garage",
+		"devices": [],
+		"residents": []
 		}
 	]
+	},
+	{
+	"number": 2,
+	"rooms": [
+		{
+		"name": "Bathroom",
+		"devices": [],
+		"residents": []
+		},
+		{
+		"name": "Bedroom",
+		"devices": [],
+		"residents": []
+		},
+		{
+		"name": "Bedroom",
+		"devices": [],
+		"residents": []
+		},
+		{
+		"name": "Bedroom",
+		"devices": [],
+		"residents": [
+			{ "type": "Dad", "name": "George" }
+		]
+		}
+	]
+	}
+]
 }

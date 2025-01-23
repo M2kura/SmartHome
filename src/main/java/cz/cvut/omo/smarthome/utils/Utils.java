@@ -1,9 +1,14 @@
 package cz.cvut.omo.smarthome.utils;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.json.JSONTokener;
+import java.io.FileReader;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Arrays;
 
 public class Utils {
     private static final String OS = System.getProperty("os.name").toLowerCase();
@@ -55,5 +60,75 @@ public class Utils {
             }
         }
         return configs;
+    }
+
+    public static String checkConfig(String fileName) throws IOException {
+        File configFile = new File(System.getProperty("user.dir")
+        + File.separator + "resources" + File.separator + "configs" + File.separator + fileName);
+        if (!configFile.exists()) {
+            return "Error: Config file does not exist " + configFile.getAbsolutePath();
+        }
+
+        FileReader reader = new FileReader(configFile);
+        JSONObject config = new JSONObject(new JSONTokener(reader));
+        if (!config.has("floors")) {
+            return "Error: Missing 'floors' array in config";
+        }
+
+        JSONArray floors = config.getJSONArray("floors");
+        List<String> validFloorFields = Arrays.asList("number", "rooms");
+        List<String> validRoomFields = Arrays.asList("name", "devices", "residents");
+        List<String> validResidentFields = Arrays.asList("type", "name");
+        for (int i = 0; i < floors.length(); i++) {
+            JSONObject floor = floors.getJSONObject(i);
+            for (String key : floor.keySet()) {
+                if (!validFloorFields.contains(key)) {
+                    return "Error: Invalid field '" + key + "' in floor";
+                }
+            }
+            if (!floor.has("number") || !floor.has("rooms")) {
+                return "Error: Floor must have 'number' and 'rooms' fields";
+            }
+
+            JSONArray rooms = floor.getJSONArray("rooms");
+            for (int j = 0; j < rooms.length(); j++) {
+                JSONObject room = rooms.getJSONObject(j);
+                for (String key : room.keySet()) {
+                    if (!validRoomFields.contains(key)) {
+                        return "Invalid field '" + key + "' in room";
+                    }
+                }
+                if (!room.has("name") || !room.has("devices") || !room.has("residents")) {
+                    return "Error: Room must have 'name', 'devices' and 'residents' fields";
+                }
+
+                JSONArray residents = room.getJSONArray("residents");
+                for (int k = 0; k < residents.length(); k++) {
+                    JSONObject resident = residents.getJSONObject(k);
+                    for (String key : resident.keySet()) {
+                        if (!validResidentFields.contains(key)) {
+                            return "Error: Invalid field '" + key + "' in resident";
+                        }
+                    }
+                    if (!resident.has("type") || !resident.has("name")) {
+                        return "Error: Resident must have 'type' and 'name' fields";
+                    }
+                }
+
+                JSONArray devices = room.getJSONArray("devices");
+                for (int k = 0; k < devices.length(); k++) {
+                    JSONObject device = devices.getJSONObject(k);
+                    for (String key : device.keySet()) {
+                        if (!key.equals("type")) {
+                            return "Error: Invalid field '" + key + "' in device";
+                        }
+                    }
+                    if (!device.has("type")) {
+                        return "Error: Resident must have 'type' field";
+                    }
+                }
+            }
+        }
+        return "OK";
     }
 }

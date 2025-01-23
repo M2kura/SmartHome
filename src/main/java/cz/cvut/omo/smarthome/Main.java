@@ -34,10 +34,13 @@ public class Main {
                 if (fileName.equals("exit")) {
                     return;
                 } else {
-                    /* if (!Utils.checkConfig(fileName)) {
+                    String check = Utils.checkConfig(fileName);
+                    if (check.equals("OK"))
+                        System.out.println("Starting the simulation...");
+                    else {
+                        System.out.println(check);
                         return;
-                    }*/
-                    System.out.println("Starting the simulation...");
+                    }
                 }
             } else {
                 System.out.println("No config files found, exiting");
