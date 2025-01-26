@@ -1,23 +1,34 @@
-package cz.cvut.omo.smarthome.house.utils;
+package cz.cvut.omo.smarthome.utils;
 
 import cz.cvut.omo.smarthome.house.resident.Resident;
 import cz.cvut.omo.smarthome.house.device.Device;
-import cz.cvut.omo.smarthome.house.utils.EventDB;
+import cz.cvut.omo.smarthome.utils.ChangableObj;
 
 import java.util.List;
+import java.util.ArrayList;
+import java.util.Optional;
 
 public class EventManager {
-    private List<Resident> residents;
-    private List<Device> devices;
-    private EventDB db;
+    private static EventManager instance;
+    private List<Event> events;
 
-    public void EventManager() {}
+    private EventManager() {
+        this.events = new ArrayList<>();
+    }
 
-    public void getEM() {}
+    public static EventManager getEM() {
+        if (instance == null) {
+            instance = new EventManager();
+        }
+        return instance;
+    }
 
     public void receiveUpdate() {}
 
-    public void getEvent() {}
-
-    public void getDB() {}
+    public Optional<Event> getEvent(ChangableObj obj) {
+        return events.stream()
+                .filter(event -> event.getStatus().equals("waiting") &&
+                        event.isFor(obj))
+                .findFirst();
+    }
 }

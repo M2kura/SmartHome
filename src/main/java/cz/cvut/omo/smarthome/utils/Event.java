@@ -1,46 +1,44 @@
-package cz.cvut.omo.smarthome.house.utils;
+package cz.cvut.omo.smarthome.utils;
 
 import cz.cvut.omo.smarthome.house.resident.Resident;
 import cz.cvut.omo.smarthome.house.device.Device;
 import cz.cvut.omo.smarthome.house.device.Food;
 import cz.cvut.omo.smarthome.house.Room;
+import cz.cvut.omo.smarthome.utils.ChangableObj;
 
 import java.util.List;
 import java.util.Optional;
 
 public class Event {
-    private List<Resident> residents;
-    private List<Device> devices;
+    private List<ChangableObj> asignedTo;
     private Optional<Room> room;
-    private Optional<List<Food>> food;
-    private String category;
-    private String description;
+    private String task;
     private String status;
 
-
-    public List<Resident> getResidents() {
-        return residents;
-    }
-
-    public List<Device> getDevices() {
-        return devices;
+    public Event() {
     }
 
     public Optional<Room> getRoom() {
         return room;
     }
 
-    public Optional<List<Food>> getFood() {
-        return food;
-    }
-
-    public String getDescription() {
-        return description;
+    public String getTask() {
+        return task;
     }
 
     public String getStatus() {
         return status;
     }
 
-    public void updateStatus() {}
+    public void updateStatus() {
+        if (status == "waiting") {
+            status = "solving";
+        } else if (status == "solving") {
+            status = "done";
+        }
+    }
+
+    public boolean isFor(ChangableObj obj) {
+        return asignedTo.contains(obj);
+    }
 }
