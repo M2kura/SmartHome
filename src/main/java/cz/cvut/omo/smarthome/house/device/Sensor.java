@@ -8,7 +8,7 @@ import java.util.Optional;
 public class Sensor extends Device{
     private String type;
     public Sensor(Consumption consumption, Optional<String> manual,
-        double breakChance, Room room) {
-        super(consumption, manual, breakChance, room);
+        double breakChance, Room room, String type) {
+        super(consumption, manual, breakChance, room, type);
     }
 }

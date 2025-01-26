@@ -4,6 +4,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -14,7 +15,7 @@ public class Utils {
     private static final String OS = System.getProperty("os.name").toLowerCase();
 
     public static void switchRawMode(boolean on) {
-        if (isWindows()) switchRawModeWindows(on);
+        if (OS.contains("win")) switchRawModeWindows(on);
         else switchRawModeUnix(on);
     }
 
@@ -42,10 +43,6 @@ public class Utils {
         }
     }
 
-    private static boolean isWindows() {
-        return OS.contains("win");
-    }
-
     public static List<String> listConfigs() throws IOException {
         List<String> configs = new ArrayList<>();
         File confDir = new File(System.getProperty("user.dir")
@@ -60,6 +57,21 @@ public class Utils {
             }
         }
         return configs;
+    }
+
+    public static void writeReportToFile(String content, String fileName) throws IOException {
+        File outputFile = new File(System.getProperty("user.dir")+File.separator
+            +"resources"+File.separator+"reports"+File.separator+fileName+".txt");
+        int count = 1;
+        while (outputFile.exists()) {
+            String newFileName = fileName+"("+count+").txt";
+            outputFile = new File(System.getProperty("user.dir")+File.separator
+                +"resources"+File.separator+"reports"+File.separator+newFileName);
+            count++;
+        }
+        try (FileWriter writer = new FileWriter(outputFile)) {
+            writer.write(content);
+        }
     }
 
     public static String checkConfig(String fileName) throws IOException {

@@ -44,7 +44,7 @@ public abstract class Resident implements ChangableObj {
 
     @Override
     public String getConfig() {
-        return "";
+        return "        (Type: "+type+", Name: "+name+")\n";
     }
 
     public void changeRoom(Room newRoom) {

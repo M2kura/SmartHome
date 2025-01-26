@@ -10,8 +10,8 @@ public abstract class Vehicle extends Device {
     private String size;
 
     public Vehicle(Consumption consumption, Optional<String> manual,
-        double breakChance, Room room, int maxSpeed, String size) {
-        super(consumption, manual, breakChance, room);
+        double breakChance, Room room, String type, int maxSpeed, String size) {
+        super(consumption, manual, breakChance, room, type);
         this.maxSpeed = maxSpeed;
         this.size = size;
     }

@@ -35,9 +35,10 @@ public class Main {
                     return;
                 } else {
                     String check = Utils.checkConfig(fileName);
-                    if (check.equals("OK"))
+                    if (check.equals("OK")) {
                         System.out.println("Starting the simulation...");
-                    else {
+                        System.out.println("-----------------");
+                    } else {
                         System.out.println(check);
                         return;
                     }
@@ -57,11 +58,40 @@ public class Main {
             SmartHome house = objectMapper.readValue(jsonData, SmartHome.class);
 
             AtomicBoolean finish = new AtomicBoolean(false);
+            AtomicBoolean paused = new AtomicBoolean(false);
+            AtomicBoolean report = new AtomicBoolean(false);
             Thread inputThread = new Thread(() -> {
                 try {
                     while (true) {
                         int input = System.in.read();
-                        if (input == 'q') {
+                        if (paused.get()) {
+                            Utils.switchRawMode(false);
+                            if (!report.get()) {
+                                if (input == 'r') {
+                                    System.out.println("Choose a type of report you want to generate:");
+                                    report.set(true);
+                                }
+                            } else {
+                                if (input == 'h') {
+                                    System.out.println("House Configuration Report was generated");
+                                    house.generateReport("HouseConfigurationReport");
+                                    report.set(false);
+                                }
+                            }
+                            Utils.switchRawMode(true);
+                        }
+                        if (input == ' ') {
+                            paused.set(!paused.get());
+                            Utils.switchRawMode(false);
+                            if (paused.get()) {
+                                System.out.println("Simulation paused");
+                            } else {
+                                report.set(false);
+                                System.out.println("Simulation unpaused");
+                                System.out.println("-----------------");
+                            }
+                            Utils.switchRawMode(true);
+                        } else if (input == 'q') {
                             finish.set(true);
                             break;
                         }
@@ -76,10 +106,13 @@ public class Main {
             Thread outputThread = new Thread(() -> {
                 while (!finish.get()) {
                     try {
-                        Utils.switchRawMode(false);
-                        house.getAction();
-                        house.getUpdate();
-                        Utils.switchRawMode(true);
+                        if (!paused.get()) {
+                            Utils.switchRawMode(false);
+                            house.getAction();
+                            house.getUpdate();
+                            System.out.println("-----------------");
+                            Utils.switchRawMode(true);
+                        }
                         Thread.sleep(1 * 1000);
                     } catch (InterruptedException e) {
                         Thread.currentThread().interrupt();

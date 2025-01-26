@@ -22,11 +22,16 @@ public class SmartHome extends UpdatableContainer {
     @JsonCreator
     public SmartHome(@JsonProperty("floors") List<JsonNode> floorNodes) {
         this.childObjs = new ArrayList<>();
-        this.report = Report.getReport();
+        this.report = Report.getReport(this);
         this.clock = Clock.getClock();
         for (JsonNode floor : floorNodes) {
             this.childObjs.add(new Floor(floor));
         }
+    }
+
+    public void generateReport(String type) {
+        if (type == "HouseConfigurationReport")
+            report.getHouseConfigurationReport();
     }
 
     @Override
@@ -40,5 +45,14 @@ public class SmartHome extends UpdatableContainer {
         for (ChangableObj child : childObjs) {
             child.getAction();
         }
+    }
+
+    @Override
+    public String getConfig() {
+        String config = "House\n";
+        for (ChangableObj child : childObjs) {
+            config += child.getConfig();
+        }
+        return config;
     }
 }

@@ -19,52 +19,49 @@ public class DeviceFactory {
         String size = "Big";
         switch (type) {
             case "HeatingSystem":
-                device = new HeatingSystem(consumption, manual, breakChance, room);
+                device = new HeatingSystem(consumption, manual, breakChance, room, type);
                 break;
             case "Car":
-                device = new Car(consumption, manual, breakChance, room, maxSpeed, size);
+                device = new Car(consumption, manual, breakChance, room, type, maxSpeed, size);
                 break;
             case "Bicycle":
-                device = new Bicycle(consumption, manual, breakChance, room, maxSpeed, size);
+                device = new Bicycle(consumption, manual, breakChance, room, type, maxSpeed, size);
                 break;
             case "Ski":
-                device = new Ski(consumption, manual, breakChance, room, maxSpeed, size);
+                device = new Ski(consumption, manual, breakChance, room, type, maxSpeed, size);
                 break;
             case "Window":
-                device = new Window(consumption, manual, breakChance, room);
+                device = new Window(consumption, manual, breakChance, room, type);
                 break;
             case "PC":
-                device = new PC(consumption, manual, breakChance, room);
+                device = new PC(consumption, manual, breakChance, room, type);
                 break;
             case "RobotVacuum":
-                device = new RobotVacuum(consumption, manual, breakChance, room);
+                device = new RobotVacuum(consumption, manual, breakChance, room, type);
                 break;
             case "TV":
-                device = new TV(consumption, manual, breakChance, room);
+                device = new TV(consumption, manual, breakChance, room, type);
                 break;
             case "LightSystem":
-                device = new LightSystem(consumption, manual, breakChance, room);
+                device = new LightSystem(consumption, manual, breakChance, room, type);
                 break;
             case "Feeder":
-                device = new Feeder(consumption, manual, breakChance, room);
-                break;
-            case "GasBoiler":
-                device = new GasBoiler(consumption, manual, breakChance, room);
+                device = new Feeder(consumption, manual, breakChance, room, type);
                 break;
             case "Phone":
-                device = new Phone(consumption, manual, breakChance, room);
+                device = new Phone(consumption, manual, breakChance, room, type);
                 break;
             case "MultiCooker":
-                device = new MultiCooker(consumption, manual, breakChance, room);
+                device = new MultiCooker(consumption, manual, breakChance, room, type);
                 break;
             case "Sensor":
-                device = new Sensor(consumption, manual, breakChance, room);
+                device = new Sensor(consumption, manual, breakChance, room, type);
                 break;
             case "KaraokeShower":
-                device = new KaraokeShower(consumption, manual, breakChance, room);
+                device = new KaraokeShower(consumption, manual, breakChance, room, type);
                 break;
             case "Fridge":
-                device = new Fridge(consumption, manual, breakChance, room);
+                device = new Fridge(consumption, manual, breakChance, room, type);
                 break;
             default:
                 throw new IllegalArgumentException("Unknown device type: " + type);

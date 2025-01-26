@@ -9,8 +9,8 @@ public class KaraokeShower extends Device{
     private String playlist;
 
     public KaraokeShower(Consumption consumption, Optional<String> manual,
-        double breakChance, Room room) {
-        super(consumption, manual, breakChance, room);
+        double breakChance, Room room, String type) {
+        super(consumption, manual, breakChance, room, type);
     }
 
     public void changePlaylist() {}

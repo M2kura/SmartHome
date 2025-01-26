@@ -9,8 +9,8 @@ public class HeatingSystem extends Device{
     private double temperature;
 
     public HeatingSystem(Consumption consumption, Optional<String> manual,
-        double breakChance, Room room) {
-        super(consumption, manual, breakChance, room);
+        double breakChance, Room room, String type) {
+        super(consumption, manual, breakChance, room, type);
         this.temperature = 20;
     }
 }

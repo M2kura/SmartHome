@@ -55,4 +55,17 @@ public class Room extends UpdatableContainer {
     public boolean isDirty() {
         return dirtLevel >= 60 ? true : false;
     }
+
+    @Override
+    public String getConfig() {
+        String config = "    "+name+"\n      "+"Devices:\n";
+        for (Device device : devices) {
+            config += device.getConfig();
+        }
+        config += "      Residents:\n";
+        for (Resident resident : residents) {
+            config += resident.getConfig();
+        }
+        return config;
+    }
 }

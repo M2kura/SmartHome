@@ -10,8 +10,8 @@ public class Car extends Vehicle{
     private int numOfSeats;
 
     public Car(Consumption consumption, Optional<String> manual,
-        double breakChance, Room room, int maxSpeed, String size) {
-        super(consumption, manual, breakChance, room, maxSpeed, size);
+        double breakChance, Room room, String type, int maxSpeed, String size) {
+        super(consumption, manual, breakChance, room, type, maxSpeed, size);
         if (size.equals("Big")) this.numOfSeats = 5;
         else this.numOfSeats = 2;
     }

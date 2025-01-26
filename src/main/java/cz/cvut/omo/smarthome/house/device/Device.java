@@ -12,6 +12,7 @@ import java.util.Map;
 import java.util.Optional;
 
 public abstract class Device implements ChangableObj {
+    protected String type;
     protected boolean isBroken;
     protected Consumption consumption;
     protected Optional<String> manual;
@@ -22,7 +23,8 @@ public abstract class Device implements ChangableObj {
     protected Report report;
 
     public Device(Consumption consumption, Optional<String> manual,
-        double breakChance, Room room) {
+        double breakChance, Room room, String type) {
+        this.type = type;
         this.isBroken = false;
         this.consumption = consumption;
         this.manual = manual;
@@ -45,7 +47,7 @@ public abstract class Device implements ChangableObj {
 
     @Override
     public String getConfig() {
-        return "";
+        return "        (Type: "+type+")\n";
     }
 
     public Consumption getConsumption() {

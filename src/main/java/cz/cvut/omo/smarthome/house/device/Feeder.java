@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public class Feeder extends Device{
     public Feeder(Consumption consumption, Optional<String> manual,
-        double breakChance, Room room) {
-        super(consumption, manual, breakChance, room);
+        double breakChance, Room room, String type) {
+        super(consumption, manual, breakChance, room, type);
     }
 }

@@ -1,0 +1,2 @@
+While simulation is on pause, press r to enter a report mode
+Being in the report mode, press h to generate the House Configuration Report

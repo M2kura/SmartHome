@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public class Ski extends Vehicle {
     public Ski(Consumption consumption, Optional<String> manual,
-        double breakChance, Room room, int maxSpeed, String size) {
-        super(consumption, manual, breakChance, room, maxSpeed, size);
+        double breakChance, Room room, String type, int maxSpeed, String size) {
+        super(consumption, manual, breakChance, room, type, maxSpeed, size);
     }
 }

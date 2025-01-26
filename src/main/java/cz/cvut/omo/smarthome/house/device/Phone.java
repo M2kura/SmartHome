@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public class Phone extends Device{
     public Phone(Consumption consumption, Optional<String> manual,
-        double breakChance, Room room) {
-        super(consumption, manual, breakChance, room);
+        double breakChance, Room room, String type) {
+        super(consumption, manual, breakChance, room, type);
     }
 }
