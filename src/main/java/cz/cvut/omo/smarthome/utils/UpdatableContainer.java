@@ -4,12 +4,12 @@ import cz.cvut.omo.smarthome.utils.ChangableObj;
 import cz.cvut.omo.smarthome.utils.Report;
 import cz.cvut.omo.smarthome.utils.Clock;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public abstract class UpdatableContainer implements ChangableObj {
     protected Clock clock;
     protected Report report;
-    private ArrayList<ChangableObj> childObjs = new ArrayList<>();
+    protected List<ChangableObj> childObjs;
 
     public void addChildObj(ChangableObj obj) {
         childObjs.add(obj);
@@ -17,5 +17,24 @@ public abstract class UpdatableContainer implements ChangableObj {
 
     public void removeChildObj(ChangableObj obj) {
         childObjs.remove(obj);
+    }
+
+    @Override
+    public void getAction() {
+        for (ChangableObj child : childObjs) {
+            child.getAction();
+        }
+    }
+
+    @Override
+    public void getUpdate() {
+        for (ChangableObj child : childObjs) {
+            child.getUpdate();
+        }
+    }
+
+    @Override
+    public String getConfig(){
+        return "";
     }
 }

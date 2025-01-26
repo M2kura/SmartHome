@@ -47,7 +47,7 @@
 		"name": "Bedroom",
 		"devices": [],
 		"residents": [
-			{ "type": "Dad", "name": "George" }
+			{ "type": "Teen", "name": "George" }
 		]
 		}
 	]

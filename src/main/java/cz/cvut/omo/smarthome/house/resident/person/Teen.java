@@ -6,9 +6,12 @@ import cz.cvut.omo.smarthome.house.Room;
 import java.util.List;
 
 public class Teen extends Adult {
-    public Teen(Room room, String name) {
-        super(room, name);
+    public Teen(Room room, String name, String type) {
+        super(room, name, type);
     }
 
-    public void study() {}
+    public void study() {
+        System.out.println(this.name + " is studying");
+        this.energyLevel -= 1.4;
+    }
 }
