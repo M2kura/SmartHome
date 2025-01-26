@@ -6,33 +6,39 @@ import com.fasterxml.jackson.databind.JsonNode;
 
 import cz.cvut.omo.smarthome.house.Floor;
 import cz.cvut.omo.smarthome.house.device.Device;
+import cz.cvut.omo.smarthome.house.resident.Resident;
 import cz.cvut.omo.smarthome.utils.UpdatableContainer;
+import cz.cvut.omo.smarthome.utils.ChangableObj;
 import cz.cvut.omo.smarthome.utils.Report;
+import cz.cvut.omo.smarthome.utils.Clock;
 
 import java.util.List;
 import java.util.ArrayList;
 
 public class SmartHome extends UpdatableContainer {
-    private List<Floor> floors;
     private List<Device> devices;
+    private List<Resident> residents;
 
     @JsonCreator
     public SmartHome(@JsonProperty("floors") List<JsonNode> floorNodes) {
-        this.floors = new ArrayList<>();
+        this.childObjs = new ArrayList<>();
         this.report = Report.getReport();
+        this.clock = Clock.getClock();
         for (JsonNode floor : floorNodes) {
-            this.floors.add(new Floor(floor));
+            this.childObjs.add(new Floor(floor));
         }
     }
 
     @Override
     public void getUpdate() {
-        System.out.println("Simulation running...");
+        clock.moveClock();
     }
 
     @Override
-    public void getAction() { return; }
-
-    @Override
-    public String getConfig() { return ""; }
+    public void getAction() {
+        System.out.println(clock.getCurrentTime());
+        for (ChangableObj child : childObjs) {
+            child.getAction();
+        }
+    }
 }

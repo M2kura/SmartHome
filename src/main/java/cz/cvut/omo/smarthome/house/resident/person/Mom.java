@@ -8,8 +8,8 @@ import java.util.List;
 public class Mom extends Adult {
     private List<Recipe> recipes;
 
-    public Mom(Room room, String name) {
-        super(room, name);
+    public Mom(Room room, String name, String type) {
+        super(room, name, type);
     }
 
     public void callFriends() {

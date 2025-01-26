@@ -33,7 +33,7 @@ public class Clock {
 
     public String getCurrentTime() {
         int hours = hoursPassed >= 16 ? 8 - (24 % hoursPassed) : hoursPassed + 8;
-        return "Current time - " + hours + ":" + minutesPassed;
+        return String.format("Current time - %02d:%02d", hours, minutesPassed);
     }
 
     public String getTimePassed() {

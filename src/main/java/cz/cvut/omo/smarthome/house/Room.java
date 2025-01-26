@@ -7,11 +7,12 @@ import cz.cvut.omo.smarthome.utils.ResidentFactory;
 import cz.cvut.omo.smarthome.house.device.Device;
 import cz.cvut.omo.smarthome.utils.DeviceFactory;
 import cz.cvut.omo.smarthome.house.device.RobotVacuum;
+import cz.cvut.omo.smarthome.utils.UpdatableContainer;
 
 import java.util.List;
 import java.util.ArrayList;
 
-public class Room {
+public class Room extends UpdatableContainer {
     private List<Device> devices;
     private List<Resident> residents;
     private Floor floor;
@@ -21,13 +22,18 @@ public class Room {
     public Room(JsonNode roomNode, Floor floor) {
         this.floor = floor;
         this.name = roomNode.get("name").asText();
+        this.childObjs = new ArrayList<>();
         this.residents = new ArrayList<>();
         this.devices = new ArrayList<>();
         for (JsonNode residentNode : roomNode.get("residents")) {
-            this.residents.add(ResidentFactory.createResident(residentNode, this));
+            Resident resident = ResidentFactory.createResident(residentNode, this);
+            this.residents.add(resident);
+            this.childObjs.add(resident);
         }
         for (JsonNode deviceNode : roomNode.get("devices")) {
-            this.devices.add(DeviceFactory.createDevice(deviceNode, this));
+            Device device = DeviceFactory.createDevice(deviceNode, this);
+            this.devices.add(device);
+            this.childObjs.add(device);
         }
     }
 
@@ -42,12 +48,11 @@ public class Room {
 
     public void removeResident(Resident resident) {}
 
-    public void isEmpty() {}
-
-    public void isDirty() {
-        if( dirtLevel > 60 ) {
-            RobotVacuum.use();
-        }
+    public boolean isEmpty() {
+        return residents.size() == 0 ? true : false;
     }
 
+    public boolean isDirty() {
+        return dirtLevel >= 60 ? true : false;
+    }
 }

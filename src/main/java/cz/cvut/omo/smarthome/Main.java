@@ -77,6 +77,7 @@ public class Main {
                 while (!finish.get()) {
                     try {
                         Utils.switchRawMode(false);
+                        house.getAction();
                         house.getUpdate();
                         Utils.switchRawMode(true);
                         Thread.sleep(1 * 1000);

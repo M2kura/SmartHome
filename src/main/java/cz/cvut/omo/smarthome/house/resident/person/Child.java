@@ -7,8 +7,8 @@ import cz.cvut.omo.smarthome.house.Room;
 public class Child extends Person{
     private Animal pet;
 
-    public Child(Room room, String name) {
-        super(room, name);
+    public Child(Room room, String name, String type) {
+        super(room, name, type);
     }
     public void askForFood() {}
 

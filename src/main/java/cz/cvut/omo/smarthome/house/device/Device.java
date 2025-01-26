@@ -5,12 +5,13 @@ import cz.cvut.omo.smarthome.house.device.Consumption;
 import cz.cvut.omo.smarthome.house.Room;
 import cz.cvut.omo.smarthome.utils.Report;
 import cz.cvut.omo.smarthome.utils.Clock;
-import java.util.Optional;
+import cz.cvut.omo.smarthome.utils.ChangableObj;
 
+import java.util.Optional;
 import java.util.Map;
 import java.util.Optional;
 
-public abstract class Device {
+public abstract class Device implements ChangableObj {
     protected boolean isBroken;
     protected Consumption consumption;
     protected Optional<String> manual;
@@ -30,6 +31,21 @@ public abstract class Device {
         this.usedBy = Optional.empty();
         this.clock = Clock.getClock();
         this.report = Report.getReport();
+    }
+
+    @Override
+    public void getUpdate() {
+        return;
+    }
+
+    @Override
+    public void getAction() {
+        return;
+    }
+
+    @Override
+    public String getConfig() {
+        return "";
     }
 
     public Consumption getConsumption() {

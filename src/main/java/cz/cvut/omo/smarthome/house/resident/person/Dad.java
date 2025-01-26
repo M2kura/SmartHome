@@ -5,8 +5,8 @@ import cz.cvut.omo.smarthome.house.Room;
 import cz.cvut.omo.smarthome.house.resident.person.Adult;
 
 public class Dad extends Adult {
-    public Dad(Room room, String name) {
-        super(room, name);
+    public Dad(Room room, String name, String type) {
+        super(room, name, type);
     }
 
     public void watchTV() {

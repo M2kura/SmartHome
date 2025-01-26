@@ -14,22 +14,22 @@ public class ResidentFactory {
         Resident resident = null;
         switch (type) {
             case "Dad":
-                resident = new Dad(room, name);
+                resident = new Dad(room, name, type);
                 break;
             case "Mom":
-                resident = new Mom(room, name);
+                resident = new Mom(room, name, type);
                 break;
             case "Teen":
-                resident = new Teen(room, name);
+                resident = new Teen(room, name, type);
                 break;
             case "Child":
-                resident = new Child(room, name);
+                resident = new Child(room, name, type);
                 break;
             case "Cat":
-                resident = new Cat(room, name);
+                resident = new Cat(room, name, type);
                 break;
             case "Dog":
-                resident = new Dog(room, name);
+                resident = new Dog(room, name, type);
                 break;
             default:
                 throw new IllegalArgumentException("Unknown resident type: " + type);

@@ -12,8 +12,8 @@ public abstract class Person extends Resident {
     private boolean isAtHome;
     private double age;
 
-    public Person(Room room, String name) {
-        super(room, name);
+    public Person(Room room, String name, String type) {
+        super(room, name, type);
         this.surname = "Smith";
         this.isAtHome = true;
     }
