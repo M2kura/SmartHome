@@ -12,10 +12,9 @@ import cz.cvut.omo.smarthome.utils.EventManager;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.lang.StringBuilder;
 
 public class Room extends UpdatableContainer {
-    private List<Device> devices;
-    private List<Resident> residents;
     private Floor floor;
     private String name;
     private int dirtLevel;
@@ -25,8 +24,6 @@ public class Room extends UpdatableContainer {
         this.floor = floor;
         this.name = roomNode.get("name").asText();
         this.childObjs = new ArrayList<>();
-        this.residents = new ArrayList<>();
-        this.devices = new ArrayList<>();
         for (JsonNode residentNode : roomNode.get("residents")) {
             Resident resident = ResidentFactory.createResident(residentNode, this);
             em.addObj(resident);
@@ -42,16 +39,27 @@ public class Room extends UpdatableContainer {
     public String getName() {
         return name;
     }
-    public void addDevice() {}
 
-    public void removeDevice() {}
+    public void addDevice(Device device) {
+        this.childObjs.add(device);
+    }
 
-    public void addResident(Resident resident) {}
+    public void removeDevice(Device device) {
+        this.childObjs.remove(device);
+    }
 
-    public void removeResident(Resident resident) {}
+    public void addResident(Resident resident) {
+        this.childObjs.add(resident);
+    }
+
+    public void removeResident(Resident resident) {
+        this.childObjs.remove(resident);
+    }
 
     public boolean isEmpty() {
-        return residents.size() == 0 ? true : false;
+        return childObjs.stream()
+            .filter(obj -> obj instanceof Resident)
+            .count() == 0 ? true : false;
     }
 
     public boolean isDirty() {
@@ -60,14 +68,15 @@ public class Room extends UpdatableContainer {
 
     @Override
     public String getConfig() {
-        String config = "    "+name+"\n      "+"Devices:\n";
-        for (Device device : devices) {
-            config += device.getConfig();
-        }
-        config += "      Residents:\n";
-        for (Resident resident : residents) {
-            config += resident.getConfig();
-        }
-        return config;
+        StringBuilder configBuilder = new StringBuilder();
+        configBuilder.append("    "+name+"\n      Devices:\n");
+        this.childObjs.stream()
+            .filter(obj -> obj instanceof Device)
+            .forEach(device -> configBuilder.append(device.getConfig()));
+        configBuilder.append("      Residents:\n");
+        this.childObjs.stream()
+            .filter(obj -> obj instanceof Resident)
+            .forEach(resident -> configBuilder.append(resident.getConfig()));
+        return configBuilder.toString();
     }
 }

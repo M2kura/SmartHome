@@ -10,7 +10,7 @@ public abstract class Resident implements ChangableObj {
     protected String type;
     protected ResidentState state;
     protected String name;
-    protected Room currentRoom;
+    protected Room room;
     protected double energyLevel;
     protected int hungerLevel;
     protected int entertainmentLevel;
@@ -20,7 +20,7 @@ public abstract class Resident implements ChangableObj {
 
     public Resident(Room room, String name, String type) {
         this.state = new Idle(this);
-        this.currentRoom = room;
+        this.room = room;
         this.personalRoom = room;
         this.name = name;
         this.type = type;
@@ -42,9 +42,11 @@ public abstract class Resident implements ChangableObj {
     }
 
     public void changeRoom(Room newRoom) {
-        if (!newRoom.equals(currentRoom)) {
+        if (!newRoom.equals(room)) {
             System.out.println(name + " is moving to" + newRoom.getName());
-            this.currentRoom = newRoom;
+            room.removeResident(this);
+            newRoom.addResident(this);
+            this.room = newRoom;
         }
     }
 
@@ -58,6 +60,10 @@ public abstract class Resident implements ChangableObj {
 
     public Room getPersonalRoom() {
         return personalRoom;
+    }
+
+    public Room getRoom() {
+        return room;
     }
 
     public boolean isTired() {

@@ -19,6 +19,15 @@ public class Involved extends ResidentState {
         event.updateStatus();
         this.timeLeft = event.getTime()-1;
         this.with = event.getInvolved();
+        if (with.isPresent()) {
+            if (with.get() instanceof Device) {
+                Device device = (Device) with.get();
+                resident.changeRoom(device.getRoom());
+            } else {
+                Resident residentWith = (Resident) with.get();
+                resident.changeRoom(residentWith.getRoom());
+            }
+        }
         System.out.println(resident.getName()+" started "+event.getTask());
     }
 

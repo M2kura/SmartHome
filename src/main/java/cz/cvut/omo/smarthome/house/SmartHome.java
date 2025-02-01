@@ -27,6 +27,8 @@ public class SmartHome extends UpdatableContainer {
         for (JsonNode floor : floorNodes) {
             this.childObjs.add(new Floor(floor));
         }
+        this.residents = getAllResidents();
+        this.devices = getAllDevices();
     }
 
     public void generateReport(String type) {
@@ -37,8 +39,11 @@ public class SmartHome extends UpdatableContainer {
     @Override
     public void getAction() {
         System.out.println(clock.getCurrentTime());
-        for (ChangableObj child : childObjs) {
-            child.getAction();
+        for (Resident resident : residents) {
+            resident.getAction();
+        }
+        for (Device device : devices) {
+            device.getAction();
         }
         clock.moveClock();
     }
