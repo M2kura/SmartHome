@@ -3,15 +3,16 @@ package cz.cvut.omo.smarthome.house.device.vehicle;
 import cz.cvut.omo.smarthome.house.Room;
 import cz.cvut.omo.smarthome.house.device.Consumption;
 import cz.cvut.omo.smarthome.house.device.Device;
+import cz.cvut.omo.smarthome.house.device.state.*;
 import java.util.Optional;
 
 public abstract class Vehicle extends Device {
     private int maxSpeed;
     private String size;
 
-    public Vehicle(Consumption consumption, Optional<String> manual,
-        double breakChance, Room room, String type, int maxSpeed, String size) {
-        super(consumption, manual, breakChance, room, type);
+    public Vehicle(Room room, String type, Consumption consumption,
+        double breakChance, int maxSpeed, String size) {
+        super(room, type, consumption, breakChance);
         this.maxSpeed = maxSpeed;
         this.size = size;
     }

@@ -1,7 +1,6 @@
 package cz.cvut.omo.smarthome.house.resident;
 
-import cz.cvut.omo.smarthome.house.resident.state.State;
-import cz.cvut.omo.smarthome.house.resident.state.IdleState;
+import cz.cvut.omo.smarthome.house.resident.state.*;
 import cz.cvut.omo.smarthome.utils.Clock;
 import cz.cvut.omo.smarthome.utils.Report;
 import cz.cvut.omo.smarthome.utils.ChangableObj;
@@ -9,7 +8,7 @@ import cz.cvut.omo.smarthome.house.Room;
 
 public abstract class Resident implements ChangableObj {
     protected String type;
-    protected State state;
+    protected ResidentState state;
     protected String name;
     protected Room currentRoom;
     protected double energyLevel;
@@ -20,7 +19,7 @@ public abstract class Resident implements ChangableObj {
     protected Report report;
 
     public Resident(Room room, String name, String type) {
-        this.state = new IdleState(this);
+        this.state = new Idle(this);
         this.currentRoom = room;
         this.personalRoom = room;
         this.name = name;
@@ -34,12 +33,12 @@ public abstract class Resident implements ChangableObj {
 
     @Override
     public void getAction() {
-        state.performAction();
+        state.getAction();
     }
 
     @Override
     public void getUpdate() {
-        return;
+        state.getUpdate();
     }
 
     @Override
@@ -75,13 +74,13 @@ public abstract class Resident implements ChangableObj {
         if (energyLevel >= 100) {
             if (energyLevel > 100) energyLevel = 100;
             System.out.println(name + " woke up");
-            setState(new IdleState(this));
+            setState(new Idle(this));
         } else {
             System.out.println(name + " is sleeping");
         }
     }
 
-    public void setState(State newState) {
+    public void setState(ResidentState newState) {
         this.state = newState;
     }
 

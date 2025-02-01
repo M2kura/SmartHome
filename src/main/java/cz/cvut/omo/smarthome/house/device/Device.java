@@ -2,6 +2,7 @@ package cz.cvut.omo.smarthome.house.device;
 
 import cz.cvut.omo.smarthome.house.resident.person.Person;
 import cz.cvut.omo.smarthome.house.device.Consumption;
+import cz.cvut.omo.smarthome.house.device.state.*;
 import cz.cvut.omo.smarthome.house.Room;
 import cz.cvut.omo.smarthome.utils.Report;
 import cz.cvut.omo.smarthome.utils.Clock;
@@ -9,7 +10,6 @@ import cz.cvut.omo.smarthome.utils.ChangableObj;
 
 import java.util.Optional;
 import java.util.Map;
-import java.util.Optional;
 
 public abstract class Device implements ChangableObj {
     protected String type;
@@ -21,15 +21,15 @@ public abstract class Device implements ChangableObj {
     protected Optional<Person> usedBy;
     protected Clock clock;
     protected Report report;
+    protected DeviceState state;
 
-    public Device(Consumption consumption, Optional<String> manual,
-        double breakChance, Room room, String type) {
-        this.type = type;
-        this.isBroken = false;
-        this.consumption = consumption;
-        this.manual = manual;
+    public Device(Room room, String type, Consumption consumption, double breakChance) {
         this.currentRoom = room;
+        this.type = type;
+        this.consumption = consumption;
         this.breakChance = breakChance;
+        this.isBroken = false;
+        this.manual = Optional.empty();
         this.usedBy = Optional.empty();
         this.clock = Clock.getClock();
         this.report = Report.getReport();
@@ -37,12 +37,12 @@ public abstract class Device implements ChangableObj {
 
     @Override
     public void getUpdate() {
-        return;
+        state.getUpdate();
     }
 
     @Override
     public void getAction() {
-        return;
+        state.getAction();
     }
 
     @Override
@@ -50,17 +50,27 @@ public abstract class Device implements ChangableObj {
         return "        (Type: "+type+")\n";
     }
 
+    public String getType() {
+        return type;
+    }
+
     public Consumption getConsumption() {
         return consumption;
     }
 
-    public static void use() {}
+    public boolean use() {
+        return Math.random() > breakChance;
+    }
 
     public Optional<String> getManual() {
         return manual;
     }
 
-    public void setManual() {
+    public void setManual(Optional<String> manual) {
         this.manual = manual;
+    }
+
+    public void setState(DeviceState state) {
+        this.state = state;
     }
 }
