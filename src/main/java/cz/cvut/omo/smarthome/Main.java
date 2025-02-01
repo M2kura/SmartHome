@@ -109,7 +109,6 @@ public class Main {
                         if (!paused.get()) {
                             Utils.switchRawMode(false);
                             house.getAction();
-                            house.getUpdate();
                             System.out.println("-----------------");
                             Utils.switchRawMode(true);
                         }

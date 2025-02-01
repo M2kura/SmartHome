@@ -7,6 +7,7 @@ import cz.cvut.omo.smarthome.utils.Clock;
 import java.util.List;
 
 public abstract class UpdatableContainer implements ChangableObj {
+    protected EventManager em;
     protected Clock clock;
     protected Report report;
     protected List<ChangableObj> childObjs;
@@ -23,13 +24,6 @@ public abstract class UpdatableContainer implements ChangableObj {
     public void getAction() {
         for (ChangableObj child : childObjs) {
             child.getAction();
-        }
-    }
-
-    @Override
-    public void getUpdate() {
-        for (ChangableObj child : childObjs) {
-            child.getUpdate();
         }
     }
 

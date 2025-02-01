@@ -14,9 +14,4 @@ public class Sleeping extends ResidentState {
     public void getAction() {
         resident.sleep();
     }
-
-    @Override
-    public void getUpdate() {
-        return;
-    }
 }

@@ -3,11 +3,12 @@ package cz.cvut.omo.smarthome.house;
 import com.fasterxml.jackson.databind.JsonNode;
 import cz.cvut.omo.smarthome.house.Floor;
 import cz.cvut.omo.smarthome.house.resident.Resident;
-import cz.cvut.omo.smarthome.utils.ResidentFactory;
 import cz.cvut.omo.smarthome.house.device.Device;
-import cz.cvut.omo.smarthome.utils.DeviceFactory;
 import cz.cvut.omo.smarthome.house.device.RobotVacuum;
+import cz.cvut.omo.smarthome.utils.ResidentFactory;
+import cz.cvut.omo.smarthome.utils.DeviceFactory;
 import cz.cvut.omo.smarthome.utils.UpdatableContainer;
+import cz.cvut.omo.smarthome.utils.EventManager;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -20,6 +21,7 @@ public class Room extends UpdatableContainer {
     private int dirtLevel;
 
     public Room(JsonNode roomNode, Floor floor) {
+        this.em = EventManager.getEM();
         this.floor = floor;
         this.name = roomNode.get("name").asText();
         this.childObjs = new ArrayList<>();
@@ -27,12 +29,12 @@ public class Room extends UpdatableContainer {
         this.devices = new ArrayList<>();
         for (JsonNode residentNode : roomNode.get("residents")) {
             Resident resident = ResidentFactory.createResident(residentNode, this);
-            this.residents.add(resident);
+            em.addObj(resident);
             this.childObjs.add(resident);
         }
         for (JsonNode deviceNode : roomNode.get("devices")) {
             Device device = DeviceFactory.createDevice(deviceNode, this);
-            this.devices.add(device);
+            em.addObj(device);
             this.childObjs.add(device);
         }
     }

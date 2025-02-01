@@ -35,16 +35,12 @@ public class SmartHome extends UpdatableContainer {
     }
 
     @Override
-    public void getUpdate() {
-        clock.moveClock();
-    }
-
-    @Override
     public void getAction() {
         System.out.println(clock.getCurrentTime());
         for (ChangableObj child : childObjs) {
             child.getAction();
         }
+        clock.moveClock();
     }
 
     @Override

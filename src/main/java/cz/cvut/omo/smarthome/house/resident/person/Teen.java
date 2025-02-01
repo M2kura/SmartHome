@@ -12,6 +12,5 @@ public class Teen extends Adult {
 
     public void study() {
         System.out.println(this.name + " is studying");
-        this.energyLevel -= 1.4;
     }
 }

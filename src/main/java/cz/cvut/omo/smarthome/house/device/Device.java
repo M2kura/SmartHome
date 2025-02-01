@@ -16,7 +16,7 @@ public abstract class Device implements ChangableObj {
     protected boolean isBroken;
     protected Consumption consumption;
     protected Optional<String> manual;
-    protected Room currentRoom;
+    protected Room room;
     protected double breakChance;
     protected Optional<Person> usedBy;
     protected Clock clock;
@@ -24,7 +24,7 @@ public abstract class Device implements ChangableObj {
     protected DeviceState state;
 
     public Device(Room room, String type, Consumption consumption, double breakChance) {
-        this.currentRoom = room;
+        this.room = room;
         this.type = type;
         this.consumption = consumption;
         this.breakChance = breakChance;
@@ -33,11 +33,6 @@ public abstract class Device implements ChangableObj {
         this.usedBy = Optional.empty();
         this.clock = Clock.getClock();
         this.report = Report.getReport();
-    }
-
-    @Override
-    public void getUpdate() {
-        state.getUpdate();
     }
 
     @Override
@@ -54,12 +49,20 @@ public abstract class Device implements ChangableObj {
         return type;
     }
 
+    public Room getRoom() {
+        return room;
+    }
+
     public Consumption getConsumption() {
         return consumption;
     }
 
     public boolean use() {
         return Math.random() > breakChance;
+    }
+
+    public void fix() {
+        setState(new TurnedOff(this));
     }
 
     public Optional<String> getManual() {

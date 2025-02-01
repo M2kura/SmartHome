@@ -12,9 +12,4 @@ public class Active extends DeviceState {
     public void getAction() {
         return;
     }
-
-    @Override
-    public void getUpdate() {
-        return;
-    }
 }

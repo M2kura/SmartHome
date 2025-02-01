@@ -16,6 +16,10 @@ public class Idle extends ResidentState {
 
     @Override
     public void getAction() {
+        if (resident.isTired()) {
+            resident.setState(new Sleeping(resident));
+            return;
+        }
         Optional<Event> event = em.getEvent(resident);
         if (event.isPresent()) {
             Event nextTask = event.get();
@@ -24,13 +28,7 @@ public class Idle extends ResidentState {
         } else {
             commonAction();
         }
-    }
-
-    @Override
-    public void getUpdate() {
-        if (resident.isTired()) {
-            resident.setState(new Sleeping(resident));
-        }
+        resident.doAction(true);
     }
 
     private void commonAction() {

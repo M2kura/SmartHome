@@ -37,11 +37,6 @@ public abstract class Resident implements ChangableObj {
     }
 
     @Override
-    public void getUpdate() {
-        state.getUpdate();
-    }
-
-    @Override
     public String getConfig() {
         return "        (Type: "+type+", Name: "+name+")\n";
     }
@@ -69,8 +64,16 @@ public abstract class Resident implements ChangableObj {
         return energyLevel <= 10;
     }
 
+    public void doAction(boolean common) {
+        if (common) {
+            this.energyLevel -= 1.4286;
+        } else {
+            this.energyLevel -= 1.43;
+        }
+    }
+
     public void sleep() {
-        energyLevel += 3;
+        energyLevel += 2.9;
         if (energyLevel >= 100) {
             if (energyLevel > 100) energyLevel = 100;
             System.out.println(name + " woke up");

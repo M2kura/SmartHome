@@ -13,5 +13,4 @@ public abstract class ResidentState {
     }
 
     public abstract void getAction();
-    public abstract void getUpdate();
 }
