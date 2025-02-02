@@ -10,7 +10,12 @@ public class Sensor extends Device{
     private String sensorType;
 
     public Sensor(Room room, String type) {
-        super(room, type, new Consumption("Sensor"), 0.1);
+        super(room, type, new Consumption("Sensor"), 0.0001);
+        setState(new TurnedOn(this));
+    }
+
+    @Override
+    public void fix() {
         setState(new TurnedOn(this));
     }
 }

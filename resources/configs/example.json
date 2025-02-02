@@ -5,22 +5,44 @@
 	"rooms": [
 		{
 		"name": "Outside",
-		"devices": [],
+		"devices": [
+			{ "type": "Sensor" }
+		],
 		"residents": []
 		},
 		{
 		"name": "Kitchen",
-		"devices": [],
+		"devices": [
+			{ "type": "Light System" },
+			{ "type": "Heating System" },
+			{ "type": "Window" },
+			{ "type": "Fridge" },
+			{ "type": "MultiCooker" },
+			{ "type": "Feeder" }
+		],
 		"residents": []
 		},
 		{
 		"name": "Living Room",
-		"devices": [],
+		"devices": [
+			{ "type": "Light System" },
+			{ "type": "Heating System" },
+			{ "type": "Window" },
+			{ "type": "TV" },
+			{ "type": "Robot Vacuum" }
+		],
 		"residents": []
 		},
 		{
 		"name": "Garage",
-		"devices": [],
+		"devices": [
+			{ "type": "Light System" },
+			{ "type": "Heating System" },
+			{ "type": "Car" },
+			{ "type": "Bicycle" },
+			{ "type": "Bicycle" },
+			{ "type": "Ski" }
+		],
 		"residents": []
 		}
 	]
@@ -30,22 +52,42 @@
 	"rooms": [
 		{
 		"name": "Bathroom",
-		"devices": [],
+		"devices": [
+			{ "type": "Light System" },
+			{ "type": "Heating System" },
+			{ "type": "Karaoke Shower" }
+		],
 		"residents": []
 		},
 		{
 		"name": "Bedroom",
-		"devices": [],
+		"devices": [
+			{ "type": "Light System" },
+			{ "type": "Heating System" },
+			{ "type": "Window" }
+		],
 		"residents": []
 		},
 		{
 		"name": "Bedroom",
-		"devices": [],
-		"residents": []
+		"devices": [
+			{ "type": "Light System" },
+			{ "type": "Heating System" },
+			{ "type": "Window" },
+			{ "type": "PC" },
+			{ "type": "Phone" }
+		],
+		"residents": [
+			{ "type": "Dad", "name": "Bill" }
+		]
 		},
 		{
 		"name": "Bedroom",
-		"devices": [],
+		"devices": [
+			{ "type": "Light System" },
+			{ "type": "Heating System" },
+			{ "type": "Window" }
+		],
 		"residents": [
 			{ "type": "Teen", "name": "George" }
 		]

@@ -43,7 +43,7 @@ public abstract class Resident implements ChangableObj {
 
     public void changeRoom(Room newRoom) {
         if (!newRoom.equals(room)) {
-            System.out.println(name + " is moving to" + newRoom.getName());
+            System.out.println(name + " is moving to " + newRoom.getName());
             room.removeResident(this);
             newRoom.addResident(this);
             this.room = newRoom;

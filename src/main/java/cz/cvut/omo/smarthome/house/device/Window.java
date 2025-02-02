@@ -10,8 +10,13 @@ public class Window extends Device{
     private String blindState;
 
     public Window(Room room, String type) {
-        super(room, type, new Consumption("Window"), 0.1);
+        super(room, type, new Consumption("Window"), 0.001);
         setState(new TurnedOn(this));
         this.blindState = "Closed";
+    }
+
+    @Override
+    public void fix() {
+        setState(new TurnedOn(this));
     }
 }

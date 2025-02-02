@@ -13,6 +13,13 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Main {
+    static void getHouseAction(SmartHome house) {
+        Utils.switchRawMode(false);
+        house.getAction();
+        System.out.println("-----------------");
+        Utils.switchRawMode(true);
+    }
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         List<String> configs;
@@ -94,6 +101,8 @@ public class Main {
                         } else if (input == 'q') {
                             finish.set(true);
                             break;
+                        } else if (input == 'f') {
+                            getHouseAction(house);
                         }
                     }
                 } catch (IOException e) {
@@ -107,10 +116,7 @@ public class Main {
                 while (!finish.get()) {
                     try {
                         if (!paused.get()) {
-                            Utils.switchRawMode(false);
-                            house.getAction();
-                            System.out.println("-----------------");
-                            Utils.switchRawMode(true);
+                            getHouseAction(house);
                         }
                         Thread.sleep(1 * 1000);
                     } catch (InterruptedException e) {

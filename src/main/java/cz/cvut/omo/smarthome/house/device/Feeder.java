@@ -8,7 +8,12 @@ import java.util.Optional;
 
 public class Feeder extends Device{
     public Feeder(Room room, String type) {
-        super(room, type, new Consumption("Feeder"), 0.1);
+        super(room, type, new Consumption("Feeder"), 0.005);
+        setState(new TurnedOn(this));
+    }
+
+    @Override
+    public void fix() {
         setState(new TurnedOn(this));
     }
 }

@@ -10,8 +10,13 @@ public class HeatingSystem extends Device{
     private double temperature;
 
     public HeatingSystem(Room room, String type) {
-        super(room, type, new Consumption("Heating System"), 0.1);
+        super(room, type, new Consumption("Heating System"), 0.0001);
         setState(new TurnedOn(this));
         this.temperature = 20;
+    }
+
+    @Override
+    public void fix() {
+        setState(new TurnedOn(this));
     }
 }
