@@ -3,6 +3,7 @@ package cz.cvut.omo.smarthome.utils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONTokener;
+import org.json.JSONException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.File;
@@ -84,12 +85,26 @@ public class Utils {
         }
 
         FileReader reader = new FileReader(configFile);
-        JSONObject config = new JSONObject(new JSONTokener(reader));
+        JSONObject config;
+        try {
+            config = new JSONObject(new JSONTokener(reader));
+        } catch (JSONException e) {
+            return "Error: Invalid JSON format - "+e.getMessage()+"\n";
+        }
+        for (String key : config.keySet()) {
+            if (!key.equals("floors"))
+                output.append("Error: Invalid field '" + key + "' in floor\n");
+        }
         if (!config.has("floors")) {
-            return "Error: Missing 'floors' array in config";
+            return "Error: Missing 'floors' array in config\n";
         }
 
-        JSONArray floors = config.getJSONArray("floors");
+        JSONArray floors;
+        try {
+            floors = config.getJSONArray("floors");
+        } catch (JSONException e) {
+            return "Error: 'floors' must be an array\n";
+        }
         List<String> validFloorFields = Arrays.asList("number", "rooms");
         List<String> validRoomFields = Arrays.asList("name", "devices", "residents");
         List<String> validRoomNames = Arrays.asList(
@@ -113,12 +128,21 @@ public class Utils {
             JSONObject floor = floors.getJSONObject(i);
             for (String key : floor.keySet()) {
                 if (!validFloorFields.contains(key))
-                    return output.toString()+"Error: Invalid field '" + key + "' in floor\n";
+                    output.append("Error: Invalid field '" + key + "' in floor\n");
             }
             if (!floor.has("number") || !floor.has("rooms"))
                 return output.toString()+"Error: Floor must have 'number' and 'rooms' fields\n";
-
-            JSONArray rooms = floor.getJSONArray("rooms");
+            try {
+                floor.getInt("number");
+            } catch (JSONException e) {
+                output.append("Error: Floor number must be an integer\n");
+            }
+            JSONArray rooms;
+            try {
+                rooms = floor.getJSONArray("rooms");
+            } catch (JSONException e) {
+                return output.toString()+"Error: 'rooms' must be an array\n";
+            }
             for (int j = 0; j < rooms.length(); j++) {
                 JSONObject room = rooms.getJSONObject(j);
                 if (!room.has("name") || !room.has("devices") || !room.has("residents")) {
@@ -126,48 +150,44 @@ public class Utils {
                     +"Error: Room must have 'name', 'devices' and 'residents' fields\n";
                 }
                 String roomName = "Room";
-                if (room.getString("name").trim().isEmpty())
-                    output.append("Error: Room name cannot be empty\n");
-                else if (!validRoomNames.contains(room.getString("name")))
-                    output.append("Error: Invalid room name - "+room.getString("name")+"\n");
-                else
-                    roomName = room.getString("name");
+                try {
+                    if (room.getString("name").trim().isEmpty())
+                        output.append("Error: Room name cannot be empty\n");
+                    else if (!validRoomNames.contains(room.getString("name")))
+                        output.append("Error: Invalid room name - "+room.getString("name")+"\n");
+                    else
+                        roomName = room.getString("name");
+                } catch (JSONException e) {
+                    output.append("Error: Room name must be a string\n");
+                }
                 for (String key : room.keySet()) {
                     if (!validRoomFields.contains(key))
                         output.append("Invalid field '"+key+"' in "+roomName+"\n");
                 }
-                JSONArray residents = room.getJSONArray("residents");
-                for (int k = 0; k < residents.length(); k++) {
-                    JSONObject resident = residents.getJSONObject(k);
-                    if (!resident.has("type") || !resident.has("name"))
-                        return output.toString()+"Error: Resident must have 'type' and 'name' fields\n";
-                    String residentName = resident.getString("name");
-                    String residentType = resident.getString("type");
-                    if (residentName.trim().isEmpty())
-                        output.append("Error: Resident name cannot be empty\n");
-                    if (!validPersonTypes.contains(residentType) && !validAnimalTypes.contains(residentType))
-                        output.append("Error: Invalid type '" + residentType + "' in resident "+residentName+"\n");
-                    for (String key : resident.keySet()) {
-                        if (!validResidentFields.contains(key)) {
-                            output.append("Error: Invalid field '" + key + "' in resident "+residentName+"\n");
-                        }
-                    }
-                    if (validPersonTypes.contains(residentType))
-                        personCount++;
-                    else if (validAnimalTypes.contains(residentType))
-                        petCount++;
+                JSONArray devices;
+                try {
+                    devices = room.getJSONArray("devices");
+                } catch (JSONException e) {
+                    return output.toString()+"Error: 'devices' must be an array\n";
                 }
-
-                JSONArray devices = room.getJSONArray("devices");
                 for (int k = 0; k < devices.length(); k++) {
-                    JSONObject device = devices.getJSONObject(k);
+                    JSONObject device;
+                    try {
+                        device = devices.getJSONObject(k);
+                    } catch (JSONException e) {
+                        return output.toString()+"Error: 'devices' array must contain {} objects\n";
+                    }
                     if (!device.has("type"))
                         return output.toString()+"Error: Resident must have 'type' field\n";
-                    String deviceType = device.getString("type");
-                    if (!validDeviceTypes.contains(deviceType))
-                        output.append("Error: Invalid device type '"+deviceType+"'\n");
-                    else if (!uniqueDeviceTypes.contains(deviceType))
-                        uniqueDeviceTypes.add(deviceType);
+                    String deviceType = "";
+                    try {
+                        deviceType = device.getString("type");
+                        if (!validDeviceTypes.contains(deviceType))
+                            output.append("Error: Invalid device type '"+deviceType+"'\n");
+                        else if (!uniqueDeviceTypes.contains(deviceType))
+                            uniqueDeviceTypes.add(deviceType);
+                    } catch (JSONException e) {
+                    }
                     for (String key : device.keySet()) {
                         if (!key.equals("type"))
                             output.append("Error: Invalid field '"+key+"' in device\n");
@@ -177,6 +197,51 @@ public class Utils {
                     else if (deviceType.equals("Bicycle"))
                         bicycleCount++;
                     deviceCount++;
+                }
+                JSONArray residents;
+                try {
+                    residents = room.getJSONArray("residents");
+                } catch (JSONException e) {
+                    return output.toString()+"Error: 'residents' must be an array\n";
+                }
+                for (int k = 0; k < residents.length(); k++) {
+                    JSONObject resident;
+                    try {
+                        resident = residents.getJSONObject(k);
+                    } catch (JSONException e) {
+                        return output.toString()+"Error: 'residents' array must contain {} objects\n";
+                    }
+                    if (!resident.has("type") || !resident.has("name"))
+                        return output.toString()+"Error: Resident must have 'type' and 'name' fields\n";
+                    String residentName = "";
+                    try {
+                        residentName = resident.getString("name");
+                        if (residentName.trim().isEmpty())
+                            output.append("Error: Resident name cannot be empty\n");
+                    } catch (JSONException e) {
+                        output.append("Error: Resident name must be a string\n");
+                    }
+                    String residentType = "";
+                    try {
+                        residentType = resident.getString("type");
+                        if (!validPersonTypes.contains(residentType) && !validAnimalTypes.contains(residentType))
+                            output.append("Error: Invalid type '"+residentType+"' in resident "+residentName+"\n");
+                    } catch (JSONException e) {
+                        output.append("Error: Resident type must be a string\n");
+                    }
+                    for (String key : resident.keySet()) {
+                        if (!validResidentFields.contains(key))
+                            output.append("Error: Invalid field '"+key+"' in resident "+residentName+"\n");
+                    }
+                    if (validPersonTypes.contains(residentType)) {
+                        if (!roomName.equals("Bedroom"))
+                            output.append("Error: Person should be in Bedroom\n");
+                        personCount++;
+                    } else if (validAnimalTypes.contains(residentType)) {
+                        if (!roomName.equals("Living Room"))
+                            output.append("Error: Pet should be in Living Room\n");
+                        petCount++;
+                    }
                 }
             }
         }

@@ -28,18 +28,22 @@ public class Main {
             configs = Utils.listConfigs();
             if (!configs.isEmpty()) {
                 System.out.println("Following configs found:");
-                for (String config : configs) {
+                for (String config : configs)
                     System.out.println(config);
-                }
                 System.out.println("Please, choose the config file to start simulation with by typing it's name and pressing enter.");
                 System.out.println("To quit the programm, type \"exit\" and press enter");
                 fileName = scanner.nextLine();
                 String check = "";
                 while (!check.equals("OK")) {
+                    configs = Utils.listConfigs();
                     if (fileName.equals("exit"))
                         return;
+                    else if (fileName.equals("ls")) {
+                        for (String config : configs)
+                            System.out.println(config);
+                    }
                     else if (!configs.contains(fileName))
-                        System.out.println("Incorrect file name given, try again");
+                        System.out.println("Incorrect file name given, try again. Type ls to show all available configs");
                     else {
                         check = Utils.checkConfig(fileName);
                         if (check.equals("OK")) {
