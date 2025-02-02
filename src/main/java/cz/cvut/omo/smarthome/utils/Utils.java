@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Arrays;
+import java.lang.StringBuilder;
 
 public class Utils {
     private static final String OS = System.getProperty("os.name").toLowerCase();
@@ -75,6 +76,7 @@ public class Utils {
     }
 
     public static String checkConfig(String fileName) throws IOException {
+        StringBuilder output = new StringBuilder();
         File configFile = new File(System.getProperty("user.dir")
         + File.separator + "resources" + File.separator + "configs" + File.separator + fileName);
         if (!configFile.exists()) {
@@ -90,57 +92,106 @@ public class Utils {
         JSONArray floors = config.getJSONArray("floors");
         List<String> validFloorFields = Arrays.asList("number", "rooms");
         List<String> validRoomFields = Arrays.asList("name", "devices", "residents");
+        List<String> validRoomNames = Arrays.asList(
+            "Outside", "Kitchen", "Living Room", "Garage", "Bathroom", "Bedroom"
+        );
         List<String> validResidentFields = Arrays.asList("type", "name");
+        List<String> validPersonTypes = Arrays.asList("Dad", "Mom", "Teen", "Child");
+        List<String> validAnimalTypes = Arrays.asList("Cat", "Dog");
+        List<String> validDeviceTypes = Arrays.asList(
+            "Heating System", "Car", "Bicycle", "Ski", "Window", "PC",
+            "Robot Vacuum", "TV", "Light System", "Feeder", "Phone",
+            "MultiCooker", "Sensor", "Karaoke Shower", "Fridge"
+        );
+        List<String> uniqueDeviceTypes = new ArrayList<>();
+        int deviceCount = 0;
+        int personCount = 0;
+        int petCount = 0;
+        int skiCount = 0;
+        int bicycleCount = 0;
         for (int i = 0; i < floors.length(); i++) {
             JSONObject floor = floors.getJSONObject(i);
             for (String key : floor.keySet()) {
-                if (!validFloorFields.contains(key)) {
-                    return "Error: Invalid field '" + key + "' in floor";
-                }
+                if (!validFloorFields.contains(key))
+                    return output.toString()+"Error: Invalid field '" + key + "' in floor\n";
             }
-            if (!floor.has("number") || !floor.has("rooms")) {
-                return "Error: Floor must have 'number' and 'rooms' fields";
-            }
+            if (!floor.has("number") || !floor.has("rooms"))
+                return output.toString()+"Error: Floor must have 'number' and 'rooms' fields\n";
 
             JSONArray rooms = floor.getJSONArray("rooms");
             for (int j = 0; j < rooms.length(); j++) {
                 JSONObject room = rooms.getJSONObject(j);
-                for (String key : room.keySet()) {
-                    if (!validRoomFields.contains(key)) {
-                        return "Invalid field '" + key + "' in room";
-                    }
-                }
                 if (!room.has("name") || !room.has("devices") || !room.has("residents")) {
-                    return "Error: Room must have 'name', 'devices' and 'residents' fields";
+                    return output.toString()
+                    +"Error: Room must have 'name', 'devices' and 'residents' fields\n";
                 }
-
+                String roomName = "Room";
+                if (room.getString("name").trim().isEmpty())
+                    output.append("Error: Room name cannot be empty\n");
+                else if (!validRoomNames.contains(room.getString("name")))
+                    output.append("Error: Invalid room name - "+room.getString("name")+"\n");
+                else
+                    roomName = room.getString("name");
+                for (String key : room.keySet()) {
+                    if (!validRoomFields.contains(key))
+                        output.append("Invalid field '"+key+"' in "+roomName+"\n");
+                }
                 JSONArray residents = room.getJSONArray("residents");
                 for (int k = 0; k < residents.length(); k++) {
                     JSONObject resident = residents.getJSONObject(k);
+                    if (!resident.has("type") || !resident.has("name"))
+                        return output.toString()+"Error: Resident must have 'type' and 'name' fields\n";
+                    String residentName = resident.getString("name");
+                    String residentType = resident.getString("type");
+                    if (residentName.trim().isEmpty())
+                        output.append("Error: Resident name cannot be empty\n");
+                    if (!validPersonTypes.contains(residentType) && !validAnimalTypes.contains(residentType))
+                        output.append("Error: Invalid type '" + residentType + "' in resident "+residentName+"\n");
                     for (String key : resident.keySet()) {
                         if (!validResidentFields.contains(key)) {
-                            return "Error: Invalid field '" + key + "' in resident";
+                            output.append("Error: Invalid field '" + key + "' in resident "+residentName+"\n");
                         }
                     }
-                    if (!resident.has("type") || !resident.has("name")) {
-                        return "Error: Resident must have 'type' and 'name' fields";
-                    }
+                    if (validPersonTypes.contains(residentType))
+                        personCount++;
+                    else if (validAnimalTypes.contains(residentType))
+                        petCount++;
                 }
 
                 JSONArray devices = room.getJSONArray("devices");
                 for (int k = 0; k < devices.length(); k++) {
                     JSONObject device = devices.getJSONObject(k);
+                    if (!device.has("type"))
+                        return output.toString()+"Error: Resident must have 'type' field\n";
+                    String deviceType = device.getString("type");
+                    if (!validDeviceTypes.contains(deviceType))
+                        output.append("Error: Invalid device type '"+deviceType+"'\n");
+                    else if (!uniqueDeviceTypes.contains(deviceType))
+                        uniqueDeviceTypes.add(deviceType);
                     for (String key : device.keySet()) {
-                        if (!key.equals("type")) {
-                            return "Error: Invalid field '" + key + "' in device";
-                        }
+                        if (!key.equals("type"))
+                            output.append("Error: Invalid field '"+key+"' in device\n");
                     }
-                    if (!device.has("type")) {
-                        return "Error: Resident must have 'type' field";
-                    }
+                    if (deviceType.equals("Ski"))
+                        skiCount++;
+                    else if (deviceType.equals("Bicycle"))
+                        bicycleCount++;
+                    deviceCount++;
                 }
             }
         }
-        return "OK";
+        if (personCount < 6)
+            output.append("Error: simulation must contain at least 6 people\n");
+        if (petCount < 3)
+            output.append("Error: simulation must contain at least 3 pets\n");
+        if (uniqueDeviceTypes.size() < 8)
+            output.append("Error: simulation must contain at least 8 unique device types\n");
+        if (deviceCount < 20)
+            output.append("Error: simulation must contain at least 20 devices\n");
+        if (skiCount < 1)
+            output.append("Error: simulation must contain at least 1 ski\n");
+        if (bicycleCount < 2)
+            output.append("Error: simulation must contain at least 2 bicycles\n");
+        return output.length() == 0 ? "OK" : output.toString();
     }
 }

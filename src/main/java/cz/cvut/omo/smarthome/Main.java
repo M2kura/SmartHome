@@ -34,21 +34,22 @@ public class Main {
                 System.out.println("Please, choose the config file to start simulation with by typing it's name and pressing enter.");
                 System.out.println("To quit the programm, type \"exit\" and press enter");
                 fileName = scanner.nextLine();
-                while (!fileName.equals("exit") && !configs.contains(fileName)) {
-                    System.out.println("Incorrect file name given, try again");
-                    fileName = scanner.nextLine();
-                }
-                if (fileName.equals("exit")) {
-                    return;
-                } else {
-                    String check = Utils.checkConfig(fileName);
-                    if (check.equals("OK")) {
-                        System.out.println("Starting the simulation...");
-                        System.out.println("-----------------");
-                    } else {
-                        System.out.println(check);
+                String check = "";
+                while (!check.equals("OK")) {
+                    if (fileName.equals("exit"))
                         return;
+                    else if (!configs.contains(fileName))
+                        System.out.println("Incorrect file name given, try again");
+                    else {
+                        check = Utils.checkConfig(fileName);
+                        if (check.equals("OK")) {
+                            System.out.println("Starting the simulation...");
+                            System.out.println("-----------------");
+                            break;
+                        } else
+                            System.out.println(check+"Fix errors or choose different confing");
                     }
+                    fileName = scanner.nextLine();
                 }
             } else {
                 System.out.println("No config files found, exiting");
