@@ -17,7 +17,8 @@ public class Dad extends Adult {
         //TO DO
     }
 
-    public void work() {
+    public void work(Device pc) {
+        changeRoom(pc.getRoom());
         System.out.println(this.name + " is working");
     }
 }

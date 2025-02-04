@@ -118,11 +118,11 @@ public class Utils {
             "Robot Vacuum", "TV", "Light System", "Feeder", "Phone",
             "MultiCooker", "Sensor", "Karaoke Shower", "Fridge"
         );
+        List<String> requiredDevices = Arrays.asList("PC", "Ski");
         List<String> uniqueDeviceTypes = new ArrayList<>();
-        int deviceCount = 0;
+        List<String> uniqueDevices = new ArrayList<>();
         int personCount = 0;
         int petCount = 0;
-        int skiCount = 0;
         int bicycleCount = 0;
         for (int i = 0; i < floors.length(); i++) {
             JSONObject floor = floors.getJSONObject(i);
@@ -187,16 +187,15 @@ public class Utils {
                         else if (!uniqueDeviceTypes.contains(deviceType))
                             uniqueDeviceTypes.add(deviceType);
                     } catch (JSONException e) {
+                        output.append("Error: Device type must be a string\n");
                     }
                     for (String key : device.keySet()) {
                         if (!key.equals("type"))
                             output.append("Error: Invalid field '"+key+"' in device\n");
                     }
-                    if (deviceType.equals("Ski"))
-                        skiCount++;
-                    else if (deviceType.equals("Bicycle"))
+                    if (deviceType.equals("Bicycle"))
                         bicycleCount++;
-                    deviceCount++;
+                    uniqueDevices.add(deviceType);
                 }
                 JSONArray residents;
                 try {
@@ -251,10 +250,12 @@ public class Utils {
             output.append("Error: simulation must contain at least 3 pets\n");
         if (uniqueDeviceTypes.size() < 8)
             output.append("Error: simulation must contain at least 8 unique device types\n");
-        if (deviceCount < 20)
+        if (uniqueDevices.size() < 20)
             output.append("Error: simulation must contain at least 20 devices\n");
-        if (skiCount < 1)
-            output.append("Error: simulation must contain at least 1 ski\n");
+        for (String device : requiredDevices) {
+            if (!uniqueDevices.contains(device))
+                output.append("Error: simulation must contain at least 1 "+device+"\n");
+        }
         if (bicycleCount < 2)
             output.append("Error: simulation must contain at least 2 bicycles\n");
         return output.length() == 0 ? "OK" : output.toString();

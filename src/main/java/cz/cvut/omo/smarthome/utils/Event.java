@@ -49,6 +49,10 @@ public class Event {
         this.time = time;
     }
 
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     public Optional<Room> getRoom() {
         return room;
     }

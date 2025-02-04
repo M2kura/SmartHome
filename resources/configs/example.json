@@ -31,7 +31,11 @@
 			{ "type": "TV" },
 			{ "type": "Robot Vacuum" }
 		],
-		"residents": []
+		"residents": [
+			{ "type": "Cat", "name": "Garry" },
+			{ "type": "Cat", "name": "Garfield" },
+			{ "type": "Dog", "name": "Patron" }
+		]
 		},
 		{
 		"name": "Garage",
@@ -66,7 +70,10 @@
 			{ "type": "Heating System" },
 			{ "type": "Window" }
 		],
-		"residents": []
+		"residents": [
+			{ "type": "Child", "name": "Marta" },
+			{ "type": "Child", "name": "Max" }
+		]
 		},
 		{
 		"name": "Bedroom",
@@ -78,7 +85,8 @@
 			{ "type": "Phone" }
 		],
 		"residents": [
-			{ "type": "Dad", "name": "Bill" }
+			{ "type": "Dad", "name": "Bill" },
+			{ "type": "Mom", "name": "Megan" }
 		]
 		},
 		{
@@ -89,7 +97,8 @@
 			{ "type": "Window" }
 		],
 		"residents": [
-			{ "type": "Teen", "name": "George" }
+			{ "type": "Teen", "name": "George" },
+			{ "type": "Teen", "name": "Luci" }
 		]
 		}
 	]

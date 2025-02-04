@@ -1,6 +1,7 @@
 package cz.cvut.omo.smarthome.utils;
 
 import cz.cvut.omo.smarthome.house.resident.Resident;
+import cz.cvut.omo.smarthome.house.resident.state.*;
 import cz.cvut.omo.smarthome.house.resident.person.*;
 import cz.cvut.omo.smarthome.house.device.Device;
 import cz.cvut.omo.smarthome.utils.ChangableObj;
@@ -41,7 +42,7 @@ public class EventManager {
             .filter(res -> res instanceof Dad).findFirst().get();
             event.setFor(dad);
             event.setType(type);
-            event.setTime(4);
+            event.setTime(3);
             event.setTask("fixing " + device.getType());
         }
         events.add(event);
@@ -51,6 +52,23 @@ public class EventManager {
         return events.stream()
                 .filter(event -> event.getStatus().equals("waiting") &&
                         event.isFor(obj))
+                .findFirst();
+    }
+
+    public Optional<Device> getDevice(String type) {
+        return objs.stream()
+                .filter(obj -> obj instanceof Device &&
+                        ((Device)obj).getType().equals(type) &&
+                        !((Device)obj).isBroken())
+                .map(obj -> (Device)obj)
+                .findFirst();
+    }
+
+    public Optional<Resident> getResident(String type) {
+        return objs.stream()
+                .filter(obj -> obj instanceof Resident &&
+                        ((Resident)obj).getType().equals(type))
+                .map(obj -> (Resident)obj)
                 .findFirst();
     }
 }

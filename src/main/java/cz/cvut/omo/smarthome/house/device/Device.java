@@ -57,6 +57,10 @@ public abstract class Device implements ChangableObj {
         return consumption;
     }
 
+    public boolean isBroken() {
+        return state instanceof Broken;
+    }
+
     public boolean use() {
         return Math.random() > breakChance;
     }

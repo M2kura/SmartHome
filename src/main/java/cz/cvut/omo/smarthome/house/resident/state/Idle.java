@@ -3,6 +3,7 @@ package cz.cvut.omo.smarthome.house.resident.state;
 import cz.cvut.omo.smarthome.house.resident.state.*;
 import cz.cvut.omo.smarthome.house.resident.Resident;
 import cz.cvut.omo.smarthome.house.resident.person.*;
+import cz.cvut.omo.smarthome.house.device.Device;
 import cz.cvut.omo.smarthome.utils.Event;
 import cz.cvut.omo.smarthome.utils.EventManager;
 
@@ -23,6 +24,7 @@ public class Idle extends ResidentState {
         Optional<Event> event = em.getEvent(resident);
         if (event.isPresent()) {
             Event nextTask = event.get();
+            nextTask.updateStatus();
             ResidentState newState = new Involved(resident, nextTask);
             resident.setState(newState);
         } else {
@@ -37,7 +39,12 @@ public class Idle extends ResidentState {
             teen.study();
         } else if (resident instanceof Dad) {
             Dad dad = (Dad) resident;
-            dad.work();
+            Device pc = em.getDevice("PC").get();
+            dad.work(pc);
+        } else if (resident instanceof Mom) {
+            Mom mom = (Mom) resident;
+            Optional<Device> phone = em.getDevice("Phone");
+            mom.callFriends();
         }
     }
 }
