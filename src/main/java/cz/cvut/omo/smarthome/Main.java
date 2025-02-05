@@ -84,11 +84,15 @@ public class Main {
                                     report.set(true);
                                 }
                             } else {
+                                report.set(false);
                                 if (input == 'h') {
                                     System.out.println("House Configuration Report was generated");
                                     house.generateReport("HouseConfigurationReport");
-                                    report.set(false);
-                                }
+                                } else if (input == 'e') {
+                                    System.out.println("Event Report was generated");
+                                    house.generateReport("EventReport");
+                                } else
+                                    report.set(true);
                             }
                             Utils.switchRawMode(true);
                         }
@@ -106,7 +110,7 @@ public class Main {
                         } else if (input == 'q') {
                             finish.set(true);
                             break;
-                        } else if (input == 'f') {
+                        } else if (input == 'f' && !paused.get()) {
                             getHouseAction(house);
                         }
                     }

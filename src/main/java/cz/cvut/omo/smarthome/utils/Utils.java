@@ -118,7 +118,7 @@ public class Utils {
             "Robot Vacuum", "TV", "Light System", "Feeder", "Phone",
             "MultiCooker", "Sensor", "Karaoke Shower", "Fridge"
         );
-        List<String> requiredDevices = Arrays.asList("PC", "Ski");
+        List<String> requiredDevices = Arrays.asList("PC", "Ski", "Phone");
         List<String> uniqueDeviceTypes = new ArrayList<>();
         List<String> uniqueDevices = new ArrayList<>();
         int personCount = 0;

@@ -1,5 +1,6 @@
 package cz.cvut.omo.smarthome.house.resident.person;
 
+import cz.cvut.omo.smarthome.house.device.Device;
 import cz.cvut.omo.smarthome.house.device.manuals.Recipe;
 import cz.cvut.omo.smarthome.house.resident.person.Adult;
 import cz.cvut.omo.smarthome.house.Room;
@@ -12,15 +13,11 @@ public class Mom extends Adult {
         super(room, name, type);
     }
 
-    public void callFriends() {
-        //TO DO
+    public void callFriends(Device phone) {
+        changeRoom(phone.getRoom());
+        System.out.println(this.name + " is on the phone with her friends");
+        phone.use();
     }
-
-
-    public void cookFood() {
-        //TO DO
-    }
-
 
     public void shuffleRecipes() {}
 }

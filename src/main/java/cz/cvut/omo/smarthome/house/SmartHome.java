@@ -34,6 +34,8 @@ public class SmartHome extends UpdatableContainer {
     public void generateReport(String type) {
         if (type == "HouseConfigurationReport")
             report.getHouseConfigurationReport();
+        else if (type == "EventReport")
+            report.getEventReport();
     }
 
     @Override

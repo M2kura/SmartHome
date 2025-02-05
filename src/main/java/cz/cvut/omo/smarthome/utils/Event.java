@@ -18,11 +18,15 @@ public class Event {
     private String type;
     private String status;
     private int time;
+    private int created;
+    private int solved;
+    private String solvedBy = "";
 
-    public Event() {
-        this.status = "waiting";
+    public Event(int created) {
+        this.status = "Pending";
         this.asignedTo = new ArrayList<>();
         this.involves = Optional.empty();
+        this.created = created;
     }
 
     public void setRoom(Room room) {
@@ -77,11 +81,26 @@ public class Event {
         return status;
     }
 
-    public void updateStatus() {
-        if (status == "waiting") {
-            status = "solving";
-        } else if (status == "solving") {
-            status = "done";
+    public int getCreated() {
+        return created;
+    }
+
+    public int getSolved() {
+        return solved;
+    }
+
+    public String getBy() {
+        return solvedBy;
+    }
+
+    public void updateStatus(String name) {
+        if (status == "Pending") {
+            status = "Processing";
+            solvedBy = name;
+        } else if (status == "Processing") {
+            status = "Completed";
+            Clock clock = Clock.getClock();
+            solved = clock.getTicks() - created;
         }
     }
 

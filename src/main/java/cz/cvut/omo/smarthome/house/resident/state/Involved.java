@@ -56,7 +56,7 @@ public class Involved extends ResidentState {
 
     private void finishEvent() {
         System.out.println(resident.getName()+" finished "+event.getTask());
-        event.updateStatus();
+        event.updateStatus(resident.getName());
         if (with.isPresent() && with.get() instanceof Device) {
             Device device = (Device) with.get();
             device.fix();

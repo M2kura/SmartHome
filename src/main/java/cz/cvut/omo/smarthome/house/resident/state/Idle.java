@@ -24,7 +24,7 @@ public class Idle extends ResidentState {
         Optional<Event> event = em.getEvent(resident);
         if (event.isPresent()) {
             Event nextTask = event.get();
-            nextTask.updateStatus();
+            nextTask.updateStatus(resident.getName());
             ResidentState newState = new Involved(resident, nextTask);
             resident.setState(newState);
         } else {
@@ -34,17 +34,18 @@ public class Idle extends ResidentState {
     }
 
     private void commonAction() {
-        if (resident instanceof Teen) {
-            Teen teen = (Teen) resident;
-            teen.study();
-        } else if (resident instanceof Dad) {
-            Dad dad = (Dad) resident;
+        if (resident instanceof Teen)
+            ((Teen)resident).study();
+        else if (resident instanceof Dad) {
             Device pc = em.getDevice("PC").get();
-            dad.work(pc);
+            ((Dad)resident).work(pc);
         } else if (resident instanceof Mom) {
-            Mom mom = (Mom) resident;
             Optional<Device> phone = em.getDevice("Phone");
-            mom.callFriends();
+            if (!phone.isPresent())
+                System.out.println(resident.getName() + " wants to call her friends, but the Phone is broken!");
+            else
+                ((Mom)resident).callFriends(phone.get());
+        } else if (resident instanceof Child) {
         }
     }
 }
