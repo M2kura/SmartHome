@@ -4,7 +4,6 @@ import cz.cvut.omo.smarthome.house.resident.person.Person;
 import cz.cvut.omo.smarthome.house.device.Consumption;
 import cz.cvut.omo.smarthome.house.device.state.*;
 import cz.cvut.omo.smarthome.house.Room;
-import cz.cvut.omo.smarthome.utils.Report;
 import cz.cvut.omo.smarthome.utils.Clock;
 import cz.cvut.omo.smarthome.utils.ChangableObj;
 
@@ -20,7 +19,6 @@ public abstract class Device implements ChangableObj {
     protected double breakChance;
     protected Optional<Person> usedBy;
     protected Clock clock;
-    protected Report report;
     protected DeviceState state;
 
     public Device(Room room, String type, Consumption consumption, double breakChance) {
@@ -32,7 +30,6 @@ public abstract class Device implements ChangableObj {
         this.manual = Optional.empty();
         this.usedBy = Optional.empty();
         this.clock = Clock.getClock();
-        this.report = Report.getReport();
     }
 
     @Override

@@ -5,7 +5,6 @@ import cz.cvut.omo.smarthome.house.device.*;
 import cz.cvut.omo.smarthome.house.device.state.*;
 import cz.cvut.omo.smarthome.house.device.vehicle.*;
 import cz.cvut.omo.smarthome.house.Room;
-import cz.cvut.omo.smarthome.utils.Report;
 import cz.cvut.omo.smarthome.utils.Clock;
 import java.util.Optional;
 

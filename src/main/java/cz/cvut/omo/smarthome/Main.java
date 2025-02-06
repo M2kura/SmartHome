@@ -87,10 +87,13 @@ public class Main {
                                 report.set(false);
                                 if (input == 'h') {
                                     System.out.println("House Configuration Report was generated");
-                                    house.generateReport("HouseConfigurationReport");
+                                    house.getHouseConfigurationReport();
                                 } else if (input == 'e') {
                                     System.out.println("Event Report was generated");
-                                    house.generateReport("EventReport");
+                                    house.getEventReport();
+                                } else if (input == 'a') {
+                                    System.out.println("Activity and Usage Report was generated");
+                                    house.getActivityAndUsageReport();
                                 } else
                                     report.set(true);
                             }

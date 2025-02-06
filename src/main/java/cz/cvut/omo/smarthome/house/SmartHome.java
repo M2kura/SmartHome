@@ -7,13 +7,16 @@ import com.fasterxml.jackson.databind.JsonNode;
 import cz.cvut.omo.smarthome.house.Floor;
 import cz.cvut.omo.smarthome.house.device.Device;
 import cz.cvut.omo.smarthome.house.resident.Resident;
+import cz.cvut.omo.smarthome.utils.Utils;
 import cz.cvut.omo.smarthome.utils.UpdatableContainer;
 import cz.cvut.omo.smarthome.utils.ChangableObj;
-import cz.cvut.omo.smarthome.utils.Report;
+import cz.cvut.omo.smarthome.utils.EventManager;
 import cz.cvut.omo.smarthome.utils.Clock;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.io.IOException;
+import java.lang.StringBuilder;
 
 public class SmartHome extends UpdatableContainer {
     private List<Device> devices;
@@ -22,8 +25,8 @@ public class SmartHome extends UpdatableContainer {
     @JsonCreator
     public SmartHome(@JsonProperty("floors") List<JsonNode> floorNodes) {
         this.childObjs = new ArrayList<>();
-        this.report = Report.getReport(this);
         this.clock = Clock.getClock();
+        this.em = EventManager.getEM();
         for (JsonNode floor : floorNodes) {
             this.childObjs.add(new Floor(floor));
         }
@@ -31,11 +34,46 @@ public class SmartHome extends UpdatableContainer {
         this.devices = getAllDevices();
     }
 
-    public void generateReport(String type) {
-        if (type == "HouseConfigurationReport")
-            report.getHouseConfigurationReport();
-        else if (type == "EventReport")
-            report.getEventReport();
+    public void getHouseConfigurationReport() {
+        String content = "House Configuration Report\n"
+        +clock.getTimePassed(true)+"\n"+clock.getCurrentTime()+"\n"
+        +getConfig();
+        try {
+            Utils.writeReportToFile(content, "HouseConfigurationReport");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void getEventReport() {
+        String content = "Event Report\n"
+        +clock.getTimePassed(true)+"\n"+clock.getCurrentTime()+"\n"
+        +em.getReport();
+        try {
+            Utils.writeReportToFile(content, "EventReport");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void getActivityAndUsageReport() {
+        String content = "Activity and Usage Report\n"
+        +clock.getTimePassed(true)+"\n"+clock.getCurrentTime()+"\n\n"
+        +getUsage();
+        try {
+            Utils.writeReportToFile(content, "ActivityAndUsageReport");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public String getUsage() {
+        StringBuilder output = new StringBuilder();
+        for (Resident resident : residents) {
+            output.append(resident.getName()+":\n");
+            output.append(resident.getUsage());
+        }
+        return output.toString();
     }
 
     @Override

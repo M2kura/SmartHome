@@ -3,7 +3,6 @@ package cz.cvut.omo.smarthome.utils;
 import cz.cvut.omo.smarthome.house.resident.Resident;
 import cz.cvut.omo.smarthome.house.device.Device;
 import cz.cvut.omo.smarthome.utils.ChangableObj;
-import cz.cvut.omo.smarthome.utils.Report;
 import cz.cvut.omo.smarthome.utils.Clock;
 
 import java.util.List;
@@ -14,7 +13,6 @@ import java.util.HashSet;
 public abstract class UpdatableContainer implements ChangableObj {
     protected EventManager em;
     protected Clock clock;
-    protected Report report;
     protected List<ChangableObj> childObjs;
 
     protected List<Resident> getAllResidents() {

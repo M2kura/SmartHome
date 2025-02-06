@@ -19,6 +19,7 @@ public class Involved extends ResidentState {
 
     public Involved(Resident resident, Event event) {
         super(resident);
+        resident.emptyDevice();
         this.event = event;
         this.timeLeft = event.getTime()-1;
         this.with = event.getInvolved();
@@ -44,8 +45,11 @@ public class Involved extends ResidentState {
             Device pc = em.getDevice("PC").get();
             resident.changeRoom(pc.getRoom());
             System.out.println(resident.getName()+" is searching for "+device.getType()+" manual on PC");
-            if (((PC)pc).searchManual(device))
+            resident.useDevice(pc);
+            if (((PC)pc).searchManual(device)) {
                 System.out.println(resident.getName()+" found a "+device.getType()+" manual");
+                resident.emptyDevice();
+            }
             return;
         }
         if (room.isPresent())

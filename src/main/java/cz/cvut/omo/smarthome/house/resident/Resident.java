@@ -1,22 +1,28 @@
 package cz.cvut.omo.smarthome.house.resident;
 
 import cz.cvut.omo.smarthome.house.resident.state.*;
+import cz.cvut.omo.smarthome.house.device.Device;
 import cz.cvut.omo.smarthome.utils.Clock;
-import cz.cvut.omo.smarthome.utils.Report;
 import cz.cvut.omo.smarthome.utils.ChangableObj;
 import cz.cvut.omo.smarthome.house.Room;
+
+import java.util.Optional;
+import java.util.Map;
+import java.util.HashMap;
+import java.lang.StringBuilder;
 
 public abstract class Resident implements ChangableObj {
     protected String type;
     protected ResidentState state;
     protected String name;
     protected Room room;
+    protected Room personalRoom;
+    protected String using = "";
     protected double energyLevel;
     protected int hungerLevel;
     protected int entertainmentLevel;
-    protected Room personalRoom;
+    protected Map<String, Integer> used;
     protected Clock clock;
-    protected Report report;
 
     public Resident(Room room, String name, String type) {
         this.state = new Idle(this);
@@ -27,8 +33,8 @@ public abstract class Resident implements ChangableObj {
         this.energyLevel = 100;
         this.hungerLevel = 100;
         this.entertainmentLevel = 100;
+        this.used = new HashMap<>();
         this.clock = Clock.getClock();
-        this.report = Report.getReport();
     }
 
     @Override
@@ -71,14 +77,36 @@ public abstract class Resident implements ChangableObj {
     }
 
     public void doAction(boolean common) {
-        if (common) {
+        if (common)
             this.energyLevel -= 1.4286;
-        } else {
+        else
             this.energyLevel -= 1.43;
+    }
+
+    public void useDevice(Device device) {
+        if (!device.getType().equals(using))
+            used.merge(device.getType(), 1, Integer::sum); 
+        using = device.getType();
+    }
+
+    public String getUsage() {
+        StringBuilder output = new StringBuilder();
+        if (used.isEmpty())
+            return "";
+        else {
+            for (Map.Entry<String, Integer> entry : used.entrySet()) {
+                output.append("  "+entry.getKey()+" - "+entry.getValue()+"\n");
+            }
         }
+        return output.toString();
+    }
+
+    public void emptyDevice() {
+        using = "";
     }
 
     public void sleep() {
+        emptyDevice();
         energyLevel += 2.9;
         if (energyLevel >= 100) {
             if (energyLevel > 100) energyLevel = 100;

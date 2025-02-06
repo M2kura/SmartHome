@@ -15,8 +15,8 @@ public class Mom extends Adult {
 
     public void callFriends(Device phone) {
         changeRoom(phone.getRoom());
+        useDevice(phone);
         System.out.println(this.name + " is on the phone with her friends");
-        phone.use();
     }
 
     public void shuffleRecipes() {}
