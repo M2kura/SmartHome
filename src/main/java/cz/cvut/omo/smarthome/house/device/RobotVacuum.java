@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public class RobotVacuum extends Device{
     public RobotVacuum(Room room, String type) {
-        super(room, type, new Consumption("Robot Vacuum"), 0.1);
+        super(room, type, new Consumption("electro", 20), 0.1);
         setState(new TurnedOff(this));
     }
 }

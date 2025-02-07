@@ -9,7 +9,7 @@ import java.util.Optional;
 public class TV extends Device {
 
     public TV(Room room, String type) {
-        super(room, type, new Consumption("TV"), 0.5);
+        super(room, type, new Consumption("electro", 25), 0.5);
         setState(new TurnedOff(this));
     }
 }

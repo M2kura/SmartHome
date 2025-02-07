@@ -10,7 +10,7 @@ public class KaraokeShower extends Device{
     private String playlist;
 
     public KaraokeShower(Room room, String type) {
-        super(room, type, new Consumption("Karaoke Shower"), 0.1);
+        super(room, type, new Consumption("both", 12.5, 240), 0.1);
         setState(new TurnedOff(this));
     }
 

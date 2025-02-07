@@ -16,7 +16,6 @@ import cz.cvut.omo.smarthome.utils.Clock;
 import java.util.List;
 import java.util.ArrayList;
 import java.io.IOException;
-import java.lang.StringBuilder;
 
 public class SmartHome extends UpdatableContainer {
     private List<Device> devices;
@@ -58,8 +57,10 @@ public class SmartHome extends UpdatableContainer {
 
     public void getActivityAndUsageReport() {
         String content = "Activity and Usage Report\n"
-        +clock.getTimePassed(true)+"\n"+clock.getCurrentTime()+"\n\n"
-        +getUsage();
+        +clock.getTimePassed(true)+"\n"+clock.getCurrentTime()+"\n\n";
+        for (Resident resident : residents) {
+            content += resident.getUsage();
+        }
         try {
             Utils.writeReportToFile(content, "ActivityAndUsageReport");
         } catch (IOException e) {
@@ -67,13 +68,34 @@ public class SmartHome extends UpdatableContainer {
         }
     }
 
-    public String getUsage() {
-        StringBuilder output = new StringBuilder();
-        for (Resident resident : residents) {
-            output.append(resident.getName()+":\n");
-            output.append(resident.getUsage());
+    public void getConsumptionReport() {
+        String content = "Consumption Report\n"
+        +clock.getTimePassed(true)+"\n\n"
+        +"Water price - 144,88 Kč/m3\nElectricity price - 5Kč/kWh\n\n";
+        int lightCount = 0;
+        int heatingCount = 0;
+        double totalCost = 0;
+        for (Device device : devices) {
+            if (device.getType().equals("Heating System")) {
+                if (heatingCount == 0)
+                    heatingCount++;
+                else
+                    continue;
+            } else if (device.getType().equals("Light System")) {
+                if (lightCount == 0)
+                    lightCount++;
+                else
+                    continue;
+            }
+            content += device.getConsumption();
+            totalCost += device.getCost();
         }
-        return output.toString();
+        content += String.format("\nTotal cost: %.2f Kč", totalCost);
+        try {
+            Utils.writeReportToFile(content, "ConsumptionReport");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

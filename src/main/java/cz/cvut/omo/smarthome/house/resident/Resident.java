@@ -91,9 +91,8 @@ public abstract class Resident implements ChangableObj {
 
     public String getUsage() {
         StringBuilder output = new StringBuilder();
-        if (used.isEmpty())
-            return "";
-        else {
+        output.append(getName()+":\n");
+        if (!used.isEmpty()) {
             for (Map.Entry<String, Integer> entry : used.entrySet()) {
                 output.append("  "+entry.getKey()+" - "+entry.getValue()+"\n");
             }

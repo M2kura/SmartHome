@@ -10,7 +10,7 @@ public class LightSystem extends Device{
     private int brightness;
 
     public LightSystem(Room room, String type) {
-        super(room, type, new Consumption("Light System"), 0.0001);
+        super(room, type, new Consumption("electro", 300), 0.0001);
         setState(new TurnedOn(this));
     }
 

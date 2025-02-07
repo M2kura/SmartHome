@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public class Phone extends Device{
     public Phone(Room room, String type) {
-        super(room, type, new Consumption("Phone"), 0.1);
+        super(room, type, new Consumption("electro", 2), 0.1);
         setState(new TurnedOff(this));
     }
 }

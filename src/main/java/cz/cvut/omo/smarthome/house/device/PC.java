@@ -9,7 +9,7 @@ import java.util.Optional;
 public class PC extends Device {
 
     public PC(Room room, String type) {
-        super(room, type, new Consumption("PC"), 0);
+        super(room, type, new Consumption("electro", 50), 0);
         setState(new TurnedOff(this));
         setManual(Optional.of("manual"));
     }

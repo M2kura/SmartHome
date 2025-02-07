@@ -50,8 +50,12 @@ public abstract class Device implements ChangableObj {
         return room;
     }
 
-    public Consumption getConsumption() {
-        return consumption;
+    public String getConsumption() {
+        return type+": "+consumption.getReport()+"\n";
+    }
+
+    public double getCost() {
+        return consumption.getCost();
     }
 
     public boolean isBroken() {

@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public class Ski extends Vehicle {
     public Ski(Room room, String type) {
-        super(room, type, new Consumption("Ski"), 0.1, 80, "Big");
+        super(room, type, new Consumption("none", 0), 0.1, 80, "Big");
         setState(new TurnedOff(this));
     }
 }

@@ -94,6 +94,9 @@ public class Main {
                                 } else if (input == 'a') {
                                     System.out.println("Activity and Usage Report was generated");
                                     house.getActivityAndUsageReport();
+                                } else if (input == 'c') {
+                                    System.out.println("Consumption Report was generated");
+                                    house.getConsumptionReport();
                                 } else
                                     report.set(true);
                             }
