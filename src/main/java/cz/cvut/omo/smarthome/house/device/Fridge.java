@@ -11,7 +11,7 @@ public class Fridge extends Device {
     private List<Food> groceries;
 
     public Fridge(Room room, String type) {
-        super(room, type, new Consumption("electro", 200), 0.005);
+        super(room, type, new Consumption("electro", 50), 0.005);
         setState(new TurnedOn(this));
     }
 
@@ -24,7 +24,7 @@ public class Fridge extends Device {
     public void removeFood() {}
 
     @Override
-    public void fix() {
+    public void resetState() {
         setState(new TurnedOn(this));
     }
 }

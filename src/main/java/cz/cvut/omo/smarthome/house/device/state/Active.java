@@ -10,6 +10,9 @@ public class Active extends DeviceState {
 
     @Override
     public void getAction() {
-        return;
+        if (!device.use())
+            device.setState(new Broken(device));
+        else
+            device.consume(1);
     }
 }

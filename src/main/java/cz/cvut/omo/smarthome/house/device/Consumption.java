@@ -22,16 +22,10 @@ public class Consumption {
         this.rate = rate2;
     }
 
-    public void update(boolean full) {
-        if (full) {
-            amount += rate;
-            if (type.equals("both"))
-                amount2 += rate2;
-        } else {
-            amount += rate/2;
-            if (type.equals("both"))
-                amount2 += rate2/2;
-        }
+    public void update(double fraction) {
+		amount += rate * fraction;
+		if (type.equals("both"))
+			amount2 += rate2 * fraction;
     }
 
     public String getReport() {

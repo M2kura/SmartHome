@@ -2,6 +2,7 @@ package cz.cvut.omo.smarthome.house.resident;
 
 import cz.cvut.omo.smarthome.house.resident.state.*;
 import cz.cvut.omo.smarthome.house.device.Device;
+import cz.cvut.omo.smarthome.house.device.state.*;
 import cz.cvut.omo.smarthome.utils.Clock;
 import cz.cvut.omo.smarthome.utils.ChangableObj;
 import cz.cvut.omo.smarthome.house.Room;
@@ -17,7 +18,7 @@ public abstract class Resident implements ChangableObj {
     protected String name;
     protected Room room;
     protected Room personalRoom;
-    protected String using = "";
+    protected Optional<Device> currentDevice;
     protected double energyLevel;
     protected int hungerLevel;
     protected int entertainmentLevel;
@@ -35,6 +36,7 @@ public abstract class Resident implements ChangableObj {
         this.entertainmentLevel = 100;
         this.used = new HashMap<>();
         this.clock = Clock.getClock();
+		this.currentDevice = Optional.empty();
     }
 
     @Override
@@ -84,9 +86,10 @@ public abstract class Resident implements ChangableObj {
     }
 
     public void useDevice(Device device) {
-        if (!device.getType().equals(using))
-            used.merge(device.getType(), 1, Integer::sum); 
-        using = device.getType();
+        if (currentDevice.isEmpty() || !currentDevice.get().equals(device))
+            used.merge(device.getType(), 1, Integer::sum);
+        currentDevice = Optional.of(device);
+        device.setState(new Active(device));
     }
 
     public String getUsage() {
@@ -101,7 +104,11 @@ public abstract class Resident implements ChangableObj {
     }
 
     public void emptyDevice() {
-        using = "";
+        currentDevice.ifPresent(device -> {
+			if (!device.isBroken())
+				device.resetState();
+        });
+        currentDevice = Optional.empty();
     }
 
     public void sleep() {

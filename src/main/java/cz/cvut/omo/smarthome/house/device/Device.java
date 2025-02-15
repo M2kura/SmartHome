@@ -12,7 +12,6 @@ import java.util.Map;
 
 public abstract class Device implements ChangableObj {
     protected String type;
-    protected boolean isBroken;
     protected Consumption consumption;
     protected Optional<String> manual;
     protected Room room;
@@ -26,7 +25,6 @@ public abstract class Device implements ChangableObj {
         this.type = type;
         this.consumption = consumption;
         this.breakChance = breakChance;
-        this.isBroken = false;
         this.manual = Optional.empty();
         this.usedBy = Optional.empty();
         this.clock = Clock.getClock();
@@ -66,7 +64,11 @@ public abstract class Device implements ChangableObj {
         return Math.random() > breakChance;
     }
 
-    public void fix() {
+    public void consume(double fraction) {
+        consumption.update(fraction);
+    }
+
+    public void resetState() {
         setState(new TurnedOff(this));
     }
 

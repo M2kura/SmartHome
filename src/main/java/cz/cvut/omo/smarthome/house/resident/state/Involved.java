@@ -63,7 +63,7 @@ public class Involved extends ResidentState {
         event.updateStatus(resident.getName());
         if (with.isPresent() && with.get() instanceof Device) {
             Device device = (Device) with.get();
-            device.fix();
+            device.resetState();
         }
         resident.setState(new Idle(resident));
     }

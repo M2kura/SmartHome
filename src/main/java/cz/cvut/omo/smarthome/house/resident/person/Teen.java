@@ -11,7 +11,7 @@ public class Teen extends Adult {
     }
 
     public void study() {
-        using = "";
+		emptyDevice();
         System.out.println(this.name + " is studying");
     }
 }

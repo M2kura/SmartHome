@@ -10,8 +10,9 @@ public class TurnedOn extends DeviceState {
 
     @Override
     public void getAction() {
-        if (!device.use()) {
+        if (!device.use())
             device.setState(new Broken(device));
-        }
+        else
+            device.consume(0.5);
     }
 }

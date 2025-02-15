@@ -41,9 +41,10 @@ public class Idle extends ResidentState {
             ((Dad)resident).work(pc);
         } else if (resident instanceof Mom) {
             Optional<Device> phone = em.getDevice("Phone");
-            if (!phone.isPresent())
+            if (!phone.isPresent()) {
+				resident.emptyDevice();
                 System.out.println(resident.getName() + " wants to call her friends, but the Phone is broken!");
-            else
+			} else
                 ((Mom)resident).callFriends(phone.get());
         } else if (resident instanceof Child) {
         }

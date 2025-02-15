@@ -15,7 +15,7 @@ public class LightSystem extends Device{
     }
 
     @Override
-    public void fix() {
+    public void resetState() {
         setState(new TurnedOn(this));
     }
 }
