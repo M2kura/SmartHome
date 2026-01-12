@@ -60,6 +60,10 @@ public abstract class Device implements ChangableObj {
         return state instanceof Broken;
     }
 
+    public boolean isActive() {
+        return state instanceof Active;
+    }
+
     public boolean use() {
         return Math.random() > breakChance;
     }

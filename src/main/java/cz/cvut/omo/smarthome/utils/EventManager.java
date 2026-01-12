@@ -4,6 +4,8 @@ import cz.cvut.omo.smarthome.house.resident.Resident;
 import cz.cvut.omo.smarthome.house.resident.state.*;
 import cz.cvut.omo.smarthome.house.resident.person.*;
 import cz.cvut.omo.smarthome.house.device.Device;
+import cz.cvut.omo.smarthome.house.device.vehicle.SportsEquipment;
+import cz.cvut.omo.smarthome.house.device.state.Active;
 import cz.cvut.omo.smarthome.utils.ChangableObj;
 import cz.cvut.omo.smarthome.utils.Clock;
 
@@ -92,5 +94,28 @@ public class EventManager {
                 output.append("Completed in - "+clock.ticksToString(event.getSolved())+"\n");
         }
         return output.toString();
+    }
+
+    /**
+     * Get an available sports equipment (not in use, not broken, not a Car)
+     * @return Optional containing available sports equipment, or empty if none available
+     */
+    public Optional<Device> getSportsEquipment() {
+        return objs.stream()
+                .filter(obj -> obj instanceof Device &&
+                        obj instanceof SportsEquipment &&
+                        !((Device)obj).getType().equals("Car") &&
+                        !((Device)obj).isBroken() &&
+                        !((Device)obj).isActive())
+                .map(obj -> (Device)obj)
+                .findFirst();
+    }
+
+    /**
+     * Check if any sports equipment is currently available
+     * @return true if at least one sports equipment is available
+     */
+    public boolean hasSportsEquipmentAvailable() {
+        return getSportsEquipment().isPresent();
     }
 }

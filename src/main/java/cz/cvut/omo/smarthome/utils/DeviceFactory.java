@@ -25,6 +25,12 @@ public class DeviceFactory {
             case "Ski":
                 device = new Ski(room, type);
                 break;
+            case "Skateboard":
+                device = new Skateboard(room, type);
+                break;
+            case "RollerSkates":
+                device = new RollerSkates(room, type);
+                break;
             case "Window":
                 device = new Window(room, type);
                 break;

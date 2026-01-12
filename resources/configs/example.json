@@ -45,7 +45,9 @@
 			{ "type": "Car" },
 			{ "type": "Bicycle" },
 			{ "type": "Bicycle" },
-			{ "type": "Ski" }
+			{ "type": "Ski" },
+			{ "type": "Skateboard" },
+			{ "type": "RollerSkates" }
 		],
 		"residents": []
 		}

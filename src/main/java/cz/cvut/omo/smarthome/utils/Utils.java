@@ -114,8 +114,8 @@ public class Utils {
         List<String> validPersonTypes = Arrays.asList("Dad", "Mom", "Teen", "Child");
         List<String> validAnimalTypes = Arrays.asList("Cat", "Dog");
         List<String> validDeviceTypes = Arrays.asList(
-            "Heating System", "Car", "Bicycle", "Ski", "Window", "PC",
-            "Robot Vacuum", "TV", "Light System", "Feeder", "Phone",
+            "Heating System", "Car", "Bicycle", "Ski", "Skateboard", "RollerSkates",
+            "Window", "PC", "Robot Vacuum", "TV", "Light System", "Feeder", "Phone",
             "MultiCooker", "Sensor", "Karaoke Shower", "Fridge"
         );
         List<String> requiredDevices = Arrays.asList("PC", "Ski", "Phone");

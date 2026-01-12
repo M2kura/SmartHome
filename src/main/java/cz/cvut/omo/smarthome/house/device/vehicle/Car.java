@@ -11,7 +11,7 @@ public class Car extends Vehicle{
     private int numOfSeats;
 
     public Car(Room room, String type) {
-        super(room, type, new Consumption("electro", 3145), 0.1, 200, "Big");
+        super(room, type, new Consumption("electro", 3145), 0.1, 200, "Big", "driving");
         setState(new TurnedOff(this));
         this.numOfSeats = 5;
     }
