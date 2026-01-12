@@ -19,7 +19,7 @@ public class Consumption {
     public Consumption(String type, double rate, double rate2) {
         this.type = type;
         this.rate = rate;
-        this.rate = rate2;
+		this.rate2 = rate2;
     }
 
     public void update(double fraction) {

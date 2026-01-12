@@ -94,10 +94,10 @@ public class Event {
     }
 
     public void updateStatus(String name) {
-        if (status == "Pending") {
+        if (status.equals("Pending")) {
             status = "Processing";
             solvedBy = name;
-        } else if (status == "Processing") {
+        } else if (status.equals("Processing")) {
             status = "Completed";
             Clock clock = Clock.getClock();
             solved = clock.getTicks() - created;
