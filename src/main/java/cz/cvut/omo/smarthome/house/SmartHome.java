@@ -12,6 +12,8 @@ import cz.cvut.omo.smarthome.utils.UpdatableContainer;
 import cz.cvut.omo.smarthome.utils.ChangableObj;
 import cz.cvut.omo.smarthome.utils.EventManager;
 import cz.cvut.omo.smarthome.utils.Clock;
+import cz.cvut.omo.smarthome.utils.DeviceIterator;
+import cz.cvut.omo.smarthome.utils.ResidentIterator;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -31,6 +33,47 @@ public class SmartHome extends UpdatableContainer {
         }
         this.residents = getAllResidents();
         this.devices = getAllDevices();
+    }
+
+    /**
+     * Returns an iterator for all devices in the smart home.
+     * @return DeviceIterator for iterating through all devices
+     */
+    public DeviceIterator getDeviceIterator() {
+        return new DeviceIterator(devices);
+    }
+
+    /**
+     * Returns a filtered iterator for devices of a specific type.
+     * @param deviceType the type of device to filter by
+     * @return DeviceIterator that only returns devices of the specified type
+     */
+    public DeviceIterator getDeviceIteratorByType(String deviceType) {
+        return DeviceIterator.filterByType(devices, deviceType);
+    }
+
+    /**
+     * Returns an iterator for all residents in the smart home.
+     * @return ResidentIterator for iterating through all residents
+     */
+    public ResidentIterator getResidentIterator() {
+        return new ResidentIterator(residents);
+    }
+
+    /**
+     * Returns a filtered iterator for only Person residents.
+     * @return ResidentIterator that only returns Person residents
+     */
+    public ResidentIterator getPersonIterator() {
+        return ResidentIterator.filterPersons(residents);
+    }
+
+    /**
+     * Returns a filtered iterator for only Animal residents.
+     * @return ResidentIterator that only returns Animal residents
+     */
+    public ResidentIterator getAnimalIterator() {
+        return ResidentIterator.filterAnimals(residents);
     }
 
     public void getHouseConfigurationReport() {
@@ -58,7 +101,10 @@ public class SmartHome extends UpdatableContainer {
     public void getActivityAndUsageReport() {
         String content = "Activity and Usage Report\n"
         +clock.getTimePassed(true)+"\n"+clock.getCurrentTime()+"\n\n";
-        for (Resident resident : residents) {
+        // Using iterator pattern to iterate through residents
+        ResidentIterator residentIterator = getResidentIterator();
+        while (residentIterator.hasNext()) {
+            Resident resident = residentIterator.next();
             content += resident.getUsage();
         }
         try {
@@ -75,7 +121,10 @@ public class SmartHome extends UpdatableContainer {
         int lightCount = 0;
         int heatingCount = 0;
         double totalCost = 0;
-        for (Device device : devices) {
+        // Using iterator pattern to iterate through devices
+        DeviceIterator deviceIterator = getDeviceIterator();
+        while (deviceIterator.hasNext()) {
+            Device device = deviceIterator.next();
             if (device.getType().equals("Heating System")) {
                 if (heatingCount == 0)
                     heatingCount++;
@@ -101,10 +150,16 @@ public class SmartHome extends UpdatableContainer {
     @Override
     public void getAction() {
         System.out.println(clock.getCurrentTime());
-        for (Resident resident : residents) {
+        // Using iterator pattern to iterate through residents
+        ResidentIterator residentIterator = getResidentIterator();
+        while (residentIterator.hasNext()) {
+            Resident resident = residentIterator.next();
             resident.getAction();
         }
-        for (Device device : devices) {
+        // Using iterator pattern to iterate through devices
+        DeviceIterator deviceIterator = getDeviceIterator();
+        while (deviceIterator.hasNext()) {
+            Device device = deviceIterator.next();
             device.getAction();
         }
         clock.moveClock();
