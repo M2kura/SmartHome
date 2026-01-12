@@ -6,6 +6,7 @@ import cz.cvut.omo.smarthome.house.device.Device;
 import cz.cvut.omo.smarthome.house.device.state.*;
 import java.util.Optional;
 import java.util.List;
+import java.util.ArrayList;
 
 public class Fridge extends Device {
     private List<Food> groceries;
@@ -13,15 +14,44 @@ public class Fridge extends Device {
     public Fridge(Room room, String type) {
         super(room, type, new Consumption("electro", 50), 0.005);
         setState(new TurnedOn(this));
+        this.groceries = new ArrayList<>();
     }
 
-    public void haveIngredients() {}
+    public boolean haveIngredients(String ingredient) {
+        return groceries.stream()
+            .anyMatch(food -> food.getName().equalsIgnoreCase(ingredient));
+    }
 
-    public void haveHealthyFood() {}
+    public boolean haveHealthyFood() {
+        return groceries.stream().anyMatch(Food::isHealthy);
+    }
 
-    public void addFood() {}
+    public void addFood(Food food) {
+        if (food != null) {
+            groceries.add(food);
+        }
+    }
 
-    public void removeFood() {}
+    public Food removeFood(String foodName) {
+        Optional<Food> food = groceries.stream()
+            .filter(f -> f.getName().equalsIgnoreCase(foodName))
+            .findFirst();
+        food.ifPresent(groceries::remove);
+        return food.orElse(null);
+    }
+
+    public int getFoodCount() {
+        return groceries.size();
+    }
+
+    public boolean isEmpty() {
+        return groceries.isEmpty();
+    }
+
+    public void updateFoodExpiration() {
+        groceries.forEach(Food::updateED);
+        groceries.removeIf(Food::isExpired);
+    }
 
     @Override
     public void resetState() {

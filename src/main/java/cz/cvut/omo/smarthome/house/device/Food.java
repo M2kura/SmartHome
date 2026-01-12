@@ -15,8 +15,23 @@ public class Food {
         return name;
     }
 
-    public void isHealthy() {}
-    public void isExpired() {}
+    public boolean isHealthy() {
+        return healthyFood;
+    }
 
-    public void updateED() {}
+    public boolean isExpired() {
+        return expireIn <= 0;
+    }
+
+    public void updateED() {
+        expireIn--;
+    }
+
+    public int getExpireIn() {
+        return expireIn;
+    }
+
+    public void setHealthyFood(boolean healthy) {
+        this.healthyFood = healthy;
+    }
 }
